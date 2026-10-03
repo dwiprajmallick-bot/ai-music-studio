@@ -1,7 +1,6 @@
 ﻿document.addEventListener("DOMContentLoaded", async () => {
     if (window.lucide) { lucide.createIcons(); }
 
-    let currentUser = JSON.parse(localStorage.getItem("melody_user") || "null");
     let userCredits = parseInt(localStorage.getItem("melody_credits") || "10");
     let savedCreations = JSON.parse(localStorage.getItem("melody_creations") || "[]");
 
@@ -17,6 +16,36 @@
         localStorage.setItem("melody_credits", userCredits);
         creditBalanceEl.innerText = userCredits;
     }
+
+    // লাইভ এডমিন কনটেন্ট ও প্রাইসিং ফেচিং
+    try {
+        const setRes = await fetch("/api/admin/site-settings");
+        const setData = await setRes.json();
+        if (setData.success) {
+            if (setData.settings.bannerNotice) {
+                document.getElementById("liveBanner").innerText = setData.settings.bannerNotice;
+            }
+            if (setData.settings.starterPrice) {
+                document.getElementById("dispStarterPrice").innerText = `₹${setData.settings.starterPrice}`;
+            }
+            if (setData.settings.creatorPrice) {
+                document.getElementById("dispCreatorPrice").innerText = `₹${setData.settings.creatorPrice}`;
+            }
+            const trendingCont = document.getElementById("trendingContainer");
+            if (setData.settings.trendingChips && setData.settings.trendingChips.length > 0) {
+                trendingCont.innerHTML = setData.settings.trendingChips.map(c => `
+                    <button class="trend-chip text-[11px] bg-slate-950 border border-slate-800 px-2.5 py-1 rounded-lg text-slate-300 hover:border-indigo-500 transition" data-text="${c}">
+                        💡 ${c.slice(0, 30)}...
+                    </button>
+                `).join("");
+                document.querySelectorAll(".trend-chip").forEach(chip => {
+                    chip.addEventListener("click", () => {
+                        document.getElementById("promptInput").value = chip.dataset.text;
+                    });
+                });
+            }
+        }
+    } catch (e) { console.error(e); }
 
     function renderCreations() {
         topCreationsCount.innerText = savedCreations.length;
@@ -51,7 +80,6 @@
         if (window.lucide) { lucide.createIcons(); }
     }
 
-    // Modal Events
     btnOpenCreations.addEventListener("click", () => {
         renderCreations();
         creationsModal.classList.remove("hidden");
@@ -71,21 +99,14 @@
         });
     });
 
-    document.querySelectorAll(".trend-chip").forEach(chip => {
-        chip.addEventListener("click", () => {
-            document.getElementById("promptInput").value = chip.dataset.text;
-        });
-    });
-
     updateCredits(userCredits);
     renderCreations();
 
-    // Studio Generation
+    // Studio Engine
     const btn = document.getElementById("submitBtn");
     const input = document.getElementById("promptInput");
     const genreSelect = document.getElementById("genreSelect");
     const songLangSelect = document.getElementById("songLangSelect");
-    const countryTargetSelect = document.getElementById("countryTargetSelect");
     const statusBox = document.getElementById("statusBox");
     const badgeStatus = document.getElementById("badgeStatus");
     const playerSection = document.getElementById("playerSection");
@@ -154,7 +175,6 @@
             playerSection.classList.remove("hidden");
             badgeStatus.innerText = "READY";
 
-            // Save automatically to My Creations
             savedCreations.unshift({
                 title: text.slice(0, 30),
                 genre: genreSelect.value,

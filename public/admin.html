@@ -9,7 +9,6 @@
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen font-sans">
     <script>
-        // সিকিউরিটি গার্ড: লগইন না থাকলে সাথে সাথে বের করে দেওয়া হবে
         if (!sessionStorage.getItem("admin_auth_token")) {
             window.location.href = "/secret-owner-gateway";
         }
@@ -23,7 +22,7 @@
                 </div>
                 <div>
                     <h1 class="text-base font-bold text-white">Owner Master Console</h1>
-                    <p class="text-[11px] text-slate-400">লাইভ আয় ও কাস্টমার ট্র্যাকিং সিস্টেম</p>
+                    <p class="text-[11px] text-slate-400">লাইভ আয়, কাস্টমার ও সাইট আপডেট ম্যানেজার</p>
                 </div>
             </div>
             <button onclick="sessionStorage.clear(); window.location.href=\x27/\x27;" class="text-xs bg-red-950 text-red-300 border border-red-800 px-3 py-1.5 rounded-lg flex items-center gap-1.5 hover:bg-red-900 transition">
@@ -32,7 +31,8 @@
         </div>
     </header>
 
-    <main class="max-w-7xl mx-auto p-4 md:p-6 space-y-6">
+    <main class="max-w-7xl mx-auto p-4 md:p-6 space-y-8">
+        <!-- 3 Key Metric Cards -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
             <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5">
                 <div class="flex items-center justify-between">
@@ -62,6 +62,47 @@
             </div>
         </div>
 
+        <!-- NEW: LIVE SITE CONTENT UPDATER -->
+        <section class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl">
+            <div class="flex items-center gap-2 pb-4 border-b border-slate-800 mb-5">
+                <div class="p-2 bg-indigo-950/60 text-indigo-400 rounded-xl">
+                    <i data-lucide="sliders" class="w-5 h-5"></i>
+                </div>
+                <div>
+                    <h3 class="text-base font-bold text-white">লাইভ সাইট কন্ট্রোল ও কন্টেন্ট আপডেট সেন্টার</h3>
+                    <p class="text-xs text-slate-400">এখান থেকে যেকোনো লেখা বা মূল্য পরিবর্তন করলে কাস্টমারদের পেজে সাথে সাথে বদলে যাবে</p>
+                </div>
+            </div>
+
+            <form id="siteUpdateForm" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">📢 হোমপেজের নোটিশ / অফার ব্যানার টেক্সট</label>
+                    <input type="text" id="inpBanner" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-white outline-none focus:border-indigo-500" placeholder="যেমন: আজকের স্পেশাল অফার...">
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 mb-1">💳 Starter Plan মূল্য (₹)</label>
+                        <input type="number" id="inpStarter" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-white outline-none focus:border-indigo-500 font-mono" placeholder="399">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 mb-1">👑 Creator Unlimited Plan মূল্য (₹)</label>
+                        <input type="number" id="inpCreator" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-white outline-none focus:border-indigo-500 font-mono" placeholder="1199">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">🔥 ট্রেন্ডিং প্রম্পট আইডিয়া (কমা দিয়ে আলাদা করুন)</label>
+                    <textarea id="inpTrending" rows="2" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-white outline-none focus:border-indigo-500 resize-none" placeholder="Rainy Love Ballad, Cyberpunk Beat, Romantic Lo-Fi"></textarea>
+                </div>
+
+                <button type="submit" class="py-3 px-6 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold transition flex items-center gap-2 shadow-lg shadow-indigo-600/20">
+                    <i data-lucide="save" class="w-4 h-4"></i> লাইভ সাইটে আপডেট প্রকাশ করুন
+                </button>
+            </form>
+        </section>
+
+        <!-- Orders Table -->
         <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5">
             <h3 class="text-sm font-bold text-white mb-4 flex items-center gap-2">
                 <i data-lucide="receipt" class="w-4 h-4 text-indigo-400"></i> সাম্প্রতিক পেমেন্ট ও ইনকাম তালিকা
@@ -89,6 +130,8 @@
     <script>
         document.addEventListener("DOMContentLoaded", async () => {
             if (window.lucide) { lucide.createIcons(); }
+
+            // মেট্রিক্স ও অর্ডার লোড
             try {
                 const res = await fetch("/api/admin/metrics");
                 const data = await res.json();
@@ -109,9 +152,40 @@
                         </tr>
                     `).join("");
                 }
-            } catch (e) {
-                console.error(e);
-            }
+            } catch (e) { console.error(e); }
+
+            // বর্তমান সাইট সেটিংস লোড করে ফর্মে বসানো
+            try {
+                const setRes = await fetch("/api/admin/site-settings");
+                const setData = await setRes.json();
+                if (setData.success) {
+                    document.getElementById("inpBanner").value = setData.settings.bannerNotice || "";
+                    document.getElementById("inpStarter").value = setData.settings.starterPrice || "399";
+                    document.getElementById("inpCreator").value = setData.settings.creatorPrice || "1199";
+                    document.getElementById("inpTrending").value = (setData.settings.trendingChips || []).join(", ");
+                }
+            } catch (e) { console.error(e); }
+
+            // আপডেট ফর্ম সাবমিট
+            document.getElementById("siteUpdateForm").addEventListener("submit", async (e) => {
+                e.preventDefault();
+                const bannerNotice = document.getElementById("inpBanner").value.trim();
+                const starterPrice = document.getElementById("inpStarter").value.trim();
+                const creatorPrice = document.getElementById("inpCreator").value.trim();
+                const trendingChips = document.getElementById("inpTrending").value.split(",").map(s => s.trim()).filter(Boolean);
+
+                const upRes = await fetch("/api/admin/update-site-settings", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ bannerNotice, starterPrice, creatorPrice, trendingChips })
+                });
+                const upData = await upRes.json();
+                if (upData.success) {
+                    alert("🎉 সাইট সফলভাবে আপডেট হয়েছে! কাস্টমারদের পেজে পরিবর্তনটি লাইভ কার্যকর হয়ে গেছে।");
+                } else {
+                    alert("আপডেট ব্যর্থ হয়েছে: " + upData.message);
+                }
+            });
         });
     </script>
 </body>
