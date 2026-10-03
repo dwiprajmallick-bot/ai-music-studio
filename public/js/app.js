@@ -3,56 +3,56 @@
 
     const translations = {
         bn: {
-            headerDesc: "সারা বিশ্বের সমস্ত ভাষায় গান ও দেশের সোশ্যাল মিডিয়াভিত্তিক ভিডিও স্টুডিও",
+            headerDesc: "বিশ্বমানের সম্পূর্ণ স্বয়ংক্রিয় এআই মিউজিক ও সোশ্যাল ভিডিও প্ল্যাটফর্ম",
             creditsText: "ক্রেডিট অবশিষ্ট",
             upgradeText: "আনলিমিটেড নিন",
-            titleInput: "আপনার মাতৃভাষায় গানের ভাবনা লিখুন",
+            titleInput: "আপনার গানের ভাবনা লিখুন",
             placeholder: "যেমন: বর্ষার রাতে নদীর পাড়ে দাঁড়িয়ে ফেলে আসা স্মৃতির বাঁশির সুর...",
             songLang: "গানের ভাষা:",
-            targetRegion: "🎯 টার্গেট দেশ ও সবচেয়ে জনপ্রিয় সোশ্যাল মিডিয়া:",
+            targetRegion: "🎯 টার্গেট দেশ ও সোশ্যাল মিডিয়া:",
             genreLbl: "সুর ও জনরা (Genres):",
             genreSearchPlaceholder: "🔍 জনরা খুঁজুন (বাউল, Rock, Lo-Fi, Classical)...",
-            btnCreate: "গান ও ভিডিও তৈরি করুন (-১ ক্রেডিট)",
+            btnCreate: "সম্পূর্ণ গান তৈরি করুন (-১ ক্রেডিট)",
             consoleTitle: "লাইভ স্টুডিও আউটপুট",
-            readyMsg: "দেশ ও সোশ্যাল মিডিয়া বেছে নিয়ে বাটনে চাপুন।",
-            download: "ডাউনলোড",
+            readyMsg: "ভাবনা লিখুন এবং গান তৈরি করুন বাটনে চাপ দিন।",
+            download: "অডিও ডাউনলোড",
             license: "১০০% বাণিজ্যিক ও কপিরাইট মুক্ত লাইসেন্স অন্তর্ভুক্ত"
         },
         en: {
-            headerDesc: "Universal AI Music & Country-Targeted Viral Studio",
+            headerDesc: "Autonomous Universal AI Music & Social Video Engine",
             creditsText: "Credits",
             upgradeText: "Get Unlimited",
             titleInput: "Write Your Song Concept",
-            placeholder: "e.g. A romantic acoustic love ballad under the rainy night...",
+            placeholder: "e.g. A peaceful acoustic melody under the rainy night...",
             songLang: "Song Language:",
-            targetRegion: "🎯 Target Country & Dominant Social Media:",
+            targetRegion: "🎯 Target Country & Social Media:",
             genreLbl: "Musical Tradition / Genre:",
-            genreSearchPlaceholder: "🔍 Search Genre (e.g. Baul, Rock, Lo-Fi, Pop)...",
+            genreSearchPlaceholder: "🔍 Search Genre (e.g. Baul, Rock, Lo-Fi)...",
             btnCreate: "Generate Track (-1 Credit)",
             consoleTitle: "Live Studio Output",
-            readyMsg: "Select target country and click Generate Track to begin.",
-            download: "Download",
+            readyMsg: "Enter your prompt and click Generate Track.",
+            download: "Download Audio",
             license: "100% Commercial Copyright Free Certificate Included"
         },
         hi: {
-            headerDesc: "विश्व की सभी भाषाओं में संगीत और देश-विशिष्ट वायरल वीडियो स्टूडियो",
+            headerDesc: "विश्वस्तरीय स्वचालित एआई संगीत एवं सोशल मीडिया वीडियो स्टूडियो",
             creditsText: "क्रेडिट शेष",
             upgradeText: "अनलिमिटेड लें",
-            titleInput: "अपनी मातृभाषा में गीत की सोच लिखें",
+            titleInput: "अपनी सोच लिखें",
             placeholder: "उदा: चांदनी रात में खोई हुई यादों का एक शांत अकॉस्टिक गीत...",
             songLang: "गीत की भाषा:",
-            targetRegion: "🎯 लक्षित देश और प्रमुख सोशल मीडिया:",
+            targetRegion: "🎯 लक्षित देश और सोशल मीडिया:",
             genreLbl: "संगीत शैली (Genre):",
-            genreSearchPlaceholder: "🔍 शैली खोजें (शास्त्रीय, रॉक, गज़ल, पॉप)...",
-            btnCreate: "गीत और वीडियो बनाएं (-1 क्रेडिट)",
+            genreSearchPlaceholder: "🔍 शैली खोजें...",
+            btnCreate: "गीत बनाएं (-1 क्रेडिट)",
             consoleTitle: "लाइव स्टूडियो आउटपुट",
-            readyMsg: "देश और प्लेटफॉर्म चुनें और गीत बनाएं बटन दबाएं।",
+            readyMsg: "विचार लिखें और गीत बनाएं बटन दबाएं।",
             download: "डाउनलोड",
             license: "100% कमर्शियल कॉपीराइट फ्री लाइसेंस शामिल"
         }
     };
 
-    let userCredits = parseInt(localStorage.getItem("melody_credits") || "5");
+    let userCredits = parseInt(localStorage.getItem("melody_credits") || "10");
     const creditBalanceEl = document.getElementById("creditBalance");
     function updateCredits(count) {
         userCredits = count;
@@ -64,7 +64,6 @@
     const siteLangSelect = document.getElementById("siteLangSelect");
     const songLangSelect = document.getElementById("songLangSelect");
     const countryTargetSelect = document.getElementById("countryTargetSelect");
-    const platformHint = document.getElementById("platformHint");
     const btn = document.getElementById("submitBtn");
     const input = document.getElementById("promptInput");
     const genreSelect = document.getElementById("genreSelect");
@@ -83,6 +82,7 @@
     const videoContainer = document.getElementById("videoContainer");
     const badgeAspect = document.getElementById("badgeAspect");
 
+    // Modal Events
     const pricingModal = document.getElementById("pricingModal");
     document.getElementById("btnPricing").addEventListener("click", () => pricingModal.classList.remove("hidden"));
     document.getElementById("btnCloseModal").addEventListener("click", () => pricingModal.classList.add("hidden"));
@@ -91,27 +91,23 @@
         b.addEventListener("click", () => {
             const added = parseInt(b.dataset.credits);
             updateCredits(userCredits + added);
-            alert(`🎉 Success! Added ${added} credits to your account.`);
+            alert(`🎉 Success! Added ${added} credits.`);
             pricingModal.classList.add("hidden");
         });
     });
 
-    // দেশের সোশ্যাল মিডিয়া বদলালে ভিডিও অ্যাসপেক্ট রেশিও অ্যাডাপ্ট করা
     countryTargetSelect.addEventListener("change", () => {
-        const selected = countryTargetSelect.options[countryTargetSelect.selectedIndex];
-        const aspect = selected.dataset.aspect;
+        const aspect = countryTargetSelect.options[countryTargetSelect.selectedIndex].dataset.aspect;
         if (aspect === "9:16") {
-            videoContainer.className = "relative rounded-lg overflow-hidden border border-slate-800 max-h-80 aspect-[9/16] bg-black flex items-center justify-center mx-auto transition-all duration-300";
-            badgeAspect.innerText = "9:16 Viral Mode (TikTok / Shorts / Reels)";
-            platformHint.innerText = "⚡ 9:16 Vertical Viral Algorithm Active for this Region";
+            videoContainer.className = "relative rounded-lg overflow-hidden border border-slate-800 max-h-80 aspect-[9/16] bg-black flex items-center justify-center mx-auto transition-all";
+            badgeAspect.innerText = "9:16 Shorts/TikTok Ready";
         } else {
-            videoContainer.className = "relative rounded-lg overflow-hidden border border-slate-800 max-h-72 aspect-video bg-black flex items-center justify-center mx-auto transition-all duration-300";
-            badgeAspect.innerText = "16:9 Landscape Mode (YouTube / X HD)";
-            platformHint.innerText = "📺 16:9 Cinematic Landscape Algorithm Active for this Region";
+            videoContainer.className = "relative rounded-lg overflow-hidden border border-slate-800 max-h-72 aspect-video bg-black flex items-center justify-center mx-auto transition-all";
+            badgeAspect.innerText = "16:9 YouTube HD Landscape";
         }
     });
 
-    let currentLang = "en";
+    let currentLang = "bn";
     let allCategories = [];
 
     try {
@@ -121,8 +117,8 @@
             siteLangSelect.appendChild(new Option(`${l.flag} ${l.name}`, l.code));
             songLangSelect.appendChild(new Option(`${l.flag} ${l.name}`, l.code));
         });
-        siteLangSelect.value = "en";
-        songLangSelect.value = "en";
+        siteLangSelect.value = "bn";
+        songLangSelect.value = "bn";
     } catch(e) {}
 
     try {
@@ -132,7 +128,7 @@
 
     function applyLanguage(lang) {
         currentLang = lang;
-        const t = translations[lang] || translations["en"];
+        const t = translations[lang] || translations["bn"];
 
         document.getElementById("headerDesc").innerText = t.headerDesc;
         document.getElementById("lblCredits").innerText = t.creditsText;
@@ -182,9 +178,9 @@
     });
 
     genreSearch.addEventListener("input", (e) => renderGenres(allCategories, e.target.value.trim()));
-    applyLanguage("en");
+    applyLanguage("bn");
 
-    let animationId;
+    // Audio Reactive Visualizer
     function startVisualizer() {
         canvas.width = canvas.parentElement.clientWidth;
         canvas.height = canvas.parentElement.clientHeight;
@@ -211,7 +207,7 @@
                 ctx.roundRect(x + 2, y, w - 4, h, 4);
                 ctx.fill();
             }
-            animationId = requestAnimationFrame(draw);
+            requestAnimationFrame(draw);
         }
         draw();
     }
@@ -219,7 +215,7 @@
     btn.addEventListener("click", async () => {
         if (userCredits <= 0) {
             pricingModal.classList.remove("hidden");
-            return alert("You have 0 credits left! Please upgrade to continue.");
+            return alert("আপনার কোনো ক্রেডিট নেই! অনুগ্রহ করে আনলিমিটেড প্ল্যান নিন।");
         }
 
         const text = input.value.trim();
@@ -227,16 +223,16 @@
         const targetSongLang = songLangSelect.value;
         const targetPlatform = countryTargetSelect.value;
 
-        if (!text) return alert("Please enter a song concept or prompt.");
+        if (!text) return alert("অনুগ্রহ করে আপনার গানের ভাবনাটি লিখুন।");
 
         updateCredits(userCredits - 1);
 
         btn.disabled = true;
-        badgeStatus.innerText = "PROCESSING";
+        badgeStatus.innerText = "GENERATING";
         badgeStatus.className = "text-[10px] bg-indigo-950 text-indigo-400 px-2 py-0.5 rounded animate-pulse";
         playerSection.classList.add("hidden");
 
-        statusBox.innerText = `[1/3] Generating lyrics in ${targetSongLang.toUpperCase()} (${genre})...\n`;
+        statusBox.innerText = `[১/৩] এআই সুর ও কাব্যিক লিরিক্স তৈরি হচ্ছে (${genre})...\n`;
 
         try {
             const lyrRes = await fetch("/api/generate-lyrics", {
@@ -246,7 +242,7 @@
             });
             const lyrData = await lyrRes.json();
 
-            statusBox.innerText += `[2/3] Synthesizing audio & vocal harmonics...\n`;
+            statusBox.innerText += `[২/৩] স্টুডিও কোয়ালিটি হারমোনিক্স এবং সুর প্রসেস হচ্ছে...\n`;
 
             const audRes = await fetch("/api/generate-audio", {
                 method: "POST",
@@ -255,7 +251,7 @@
             });
             const audData = await audRes.json();
 
-            statusBox.innerText += `[3/3] Encoding video optimized for target region (${targetPlatform.toUpperCase()})...\n`;
+            statusBox.innerText += `[৩/৩] সোশ্যাল মিডিয়ার ফ্রেম ও কপিরাইট ফ্রি লাইসেন্স তৈরি সম্পন্ন হচ্ছে...\n`;
             await fetch("/api/generate-video", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -263,23 +259,23 @@
             });
 
             if (audData.success) {
-                statusBox.innerText = `✨ Lyrics Generated (${targetSongLang.toUpperCase()}):\n\n${lyrData.lyrics}\n\n[Social Media Optimization Complete]`;
+                statusBox.innerText = `✨ সম্পূর্ণ গান ও লিরিক্স প্রস্তুত:\n\n${lyrData.lyrics}`;
                 
                 trackTitle.innerText = text.slice(0, 24);
-                trackMeta.innerText = `Region: ${targetPlatform.toUpperCase()} • ${genre}`;
+                trackMeta.innerText = `${genre} • সোশ্যাল ফরম্যাট: ${countryTargetSelect.options[countryTargetSelect.selectedIndex].text.slice(0, 20)}...`;
                 audioPlayer.src = audData.audioUrl;
                 downloadAudioLink.href = audData.audioUrl;
                 licenseCode.innerText = audData.licenseId;
                 
                 playerSection.classList.remove("hidden");
-                badgeStatus.innerText = "COMPLETED";
+                badgeStatus.innerText = "READY";
                 badgeStatus.className = "text-[10px] bg-emerald-950 text-emerald-400 px-2 py-0.5 rounded font-mono";
 
                 startVisualizer();
                 audioPlayer.play().catch(() => {});
             }
         } catch(err) {
-            statusBox.innerText += "\nError generating track. Please retry.";
+            statusBox.innerText += "\nগান তৈরি করতে সমস্যা হয়েছে। পুনরায় চেষ্টা করুন।";
             badgeStatus.innerText = "FAILED";
         } finally {
             btn.disabled = false;
@@ -289,13 +285,13 @@
     document.getElementById("btnShareSocial").addEventListener("click", () => {
         if (navigator.share) {
             navigator.share({
-                title: "Viral AI Music Track",
-                text: "Listen to my original AI track created with MelodyAI!",
+                title: "My AI Song",
+                text: "MelodyAI Pro দিয়ে তৈরি আমার গান শুনুন!",
                 url: window.location.href
             }).catch(() => {});
         } else {
             navigator.clipboard.writeText(window.location.href);
-            alert("Platform link copied to clipboard!");
+            alert("ওয়েবসাইটের লিংক কপি করা হয়েছে!");
         }
     });
 });
