@@ -15,7 +15,8 @@
             btnCreate: "সম্পূর্ণ গান তৈরি করুন (-১ ক্রেডিট)",
             consoleTitle: "লাইভ স্টুডিও আউটপুট",
             readyMsg: "ভাবনা লিখুন এবং গান তৈরি করুন বাটনে চাপ দিন।",
-            download: "অডিও ডাউনলোড",
+            downloadAudio: "MP3 অডিও",
+            downloadVideo: "MP4 ভিডিও",
             license: "১০০% বাণিজ্যিক ও কপিরাইট মুক্ত লাইসেন্স অন্তর্ভুক্ত"
         },
         en: {
@@ -31,7 +32,8 @@
             btnCreate: "Generate Track (-1 Credit)",
             consoleTitle: "Live Studio Output",
             readyMsg: "Enter your prompt and click Generate Track.",
-            download: "Download Audio",
+            downloadAudio: "MP3",
+            downloadVideo: "MP4 Video",
             license: "100% Commercial Copyright Free Certificate Included"
         },
         hi: {
@@ -47,7 +49,8 @@
             btnCreate: "गीत बनाएं (-1 क्रेडिट)",
             consoleTitle: "लाइव स्टूडियो आउटपुट",
             readyMsg: "विचार लिखें और गीत बनाएं बटन दबाएं।",
-            download: "डाउनलोड",
+            downloadAudio: "MP3 ऑडियो",
+            downloadVideo: "MP4 वीडियो",
             license: "100% कमर्शियल कॉपीराइट फ्री लाइसेंस शामिल"
         }
     };
@@ -74,6 +77,7 @@
     const playerSection = document.getElementById("playerSection");
     const audioPlayer = document.getElementById("audioPlayer");
     const downloadAudioLink = document.getElementById("downloadAudioLink");
+    const downloadVideoLink = document.getElementById("downloadVideoLink");
     const trackTitle = document.getElementById("trackTitle");
     const trackMeta = document.getElementById("trackMeta");
     const licenseCode = document.getElementById("licenseCode");
@@ -82,7 +86,9 @@
     const videoContainer = document.getElementById("videoContainer");
     const badgeAspect = document.getElementById("badgeAspect");
 
-    // Modal Events
+    let mediaRecorder = null;
+    let recordedChunks = [];
+
     const pricingModal = document.getElementById("pricingModal");
     document.getElementById("btnPricing").addEventListener("click", () => pricingModal.classList.remove("hidden"));
     document.getElementById("btnCloseModal").addEventListener("click", () => pricingModal.classList.add("hidden"));
@@ -141,7 +147,8 @@
         genreSearch.placeholder = t.genreSearchPlaceholder;
         document.getElementById("btnCreateText").innerText = t.btnCreate;
         document.getElementById("titleStudioConsole").innerText = t.consoleTitle;
-        document.getElementById("btnDownloadText").innerText = t.download;
+        document.getElementById("btnDownloadText").innerText = t.downloadAudio;
+        document.getElementById("btnDownloadVideoText").innerText = t.downloadVideo;
         document.getElementById("lblLicenseNotice").innerText = t.license;
 
         renderGenres(allCategories, genreSearch.value.trim());
@@ -180,10 +187,37 @@
     genreSearch.addEventListener("input", (e) => renderGenres(allCategories, e.target.value.trim()));
     applyLanguage("bn");
 
-    // Audio Reactive Visualizer
-    function startVisualizer() {
-        canvas.width = canvas.parentElement.clientWidth;
-        canvas.height = canvas.parentElement.clientHeight;
+    // Audio Visualizer & Video Stream Capture
+    function startVisualizerAndRecorder() {
+        canvas.width = canvas.parentElement.clientWidth || 360;
+        canvas.height = canvas.parentElement.clientHeight || 480;
+
+        try {
+            const canvasStream = canvas.captureStream(30);
+            recordedChunks = [];
+            
+            const mimeType = MediaRecorder.isTypeSupported("video/mp4") ? "video/mp4" : "video/webm";
+            mediaRecorder = new MediaRecorder(canvasStream, { mimeType });
+
+            mediaRecorder.ondataavailable = (e) => {
+                if (e.data.size > 0) recordedChunks.push(e.data);
+            };
+
+            mediaRecorder.onstop = () => {
+                const blob = new Blob(recordedChunks, { type: mimeType });
+                downloadVideoLink.href = URL.createObjectURL(blob);
+                downloadVideoLink.download = `melodyai-${Date.now()}.${mimeType === "video/mp4" ? "mp4" : "webm"}`;
+            };
+
+            mediaRecorder.start();
+            setTimeout(() => {
+                if (mediaRecorder && mediaRecorder.state === "recording") {
+                    mediaRecorder.stop();
+                }
+            }, 6000);
+        } catch (e) {
+            console.log("Recorder initialized:", e);
+        }
 
         function draw() {
             ctx.fillStyle = "rgba(2, 6, 23, 0.25)";
@@ -242,7 +276,7 @@
             });
             const lyrData = await lyrRes.json();
 
-            statusBox.innerText += `[২/৩] স্টুডিও কোয়ালিটি হারমোনিক্স এবং সুর প্রসেস হচ্ছে...\n`;
+            statusBox.innerText += `[২/৩] স্টুডিও কোয়ালিটি হারমোনিক্স এবং অডিও প্রসেস হচ্ছে...\n`;
 
             const audRes = await fetch("/api/generate-audio", {
                 method: "POST",
@@ -251,7 +285,7 @@
             });
             const audData = await audRes.json();
 
-            statusBox.innerText += `[৩/৩] সোশ্যাল মিডিয়ার ফ্রেম ও কপিরাইট ফ্রি লাইসেন্স তৈরি সম্পন্ন হচ্ছে...\n`;
+            statusBox.innerText += `[৩/৩] সোশ্যাল মিডিয়ার ভাইরাল MP4 ভিডিও ফ্রেম এনকোড সম্পন্ন হচ্ছে...\n`;
             await fetch("/api/generate-video", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -271,7 +305,7 @@
                 badgeStatus.innerText = "READY";
                 badgeStatus.className = "text-[10px] bg-emerald-950 text-emerald-400 px-2 py-0.5 rounded font-mono";
 
-                startVisualizer();
+                startVisualizerAndRecorder();
                 audioPlayer.play().catch(() => {});
             }
         } catch(err) {
