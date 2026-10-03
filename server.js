@@ -28,6 +28,7 @@ app.get("/about", (req, res) => res.sendFile(path.join(__dirname, "public", "abo
 app.get("/contact", (req, res) => res.sendFile(path.join(__dirname, "public", "contact.html")));
 app.get("/terms", (req, res) => res.sendFile(path.join(__dirname, "public", "terms.html")));
 app.get("/privacy", (req, res) => res.sendFile(path.join(__dirname, "public", "privacy.html")));
+app.get("/system-status", (req, res) => res.sendFile(path.join(__dirname, "public", "status.html")));
 app.get("/refund", (req, res) => res.sendFile(path.join(__dirname, "public", "refund.html")));
 
 // মালিকের গোপন এডমিন রাউট
@@ -40,3 +41,4 @@ app.get("*", (req, res) => res.sendFile(path.join(__dirname, "public", "index.ht
 app.listen(PORT, () => {
     console.log(`Server running at port ${PORT}`);
 });
+
