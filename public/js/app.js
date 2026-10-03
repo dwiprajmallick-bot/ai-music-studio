@@ -3,13 +3,13 @@
 
     const translations = {
         bn: {
-            headerDesc: "বিশ্বমানের সম্পূর্ণ স্বয়ংক্রিয় এআই মিউজিক ও সোশ্যাল ভিডিও প্ল্যাটফর্ম",
+            headerDesc: "বিশ্বমানের সম্পূর্ণ স্বয়ংক্রিয় এআই মিউজিক ও সোশ্যাল ভিডিও প্ল্যাটফর্ম",
             creditsText: "ক্রেডিট অবশিষ্ট",
             upgradeText: "আনলিমিটেড নিন",
             titleInput: "আপনার গানের ভাবনা লিখুন",
-            placeholder: "যেমন: বর্ষার রাতে নদীর পাড়ে দাঁড়িয়ে ফেলে আসা স্মৃতির বাঁশির সুর...",
+            placeholder: "যেমন: বর্ষার রাতে নদীর পাড়ে দাঁড়িয়ে ফেলে আসা স্মৃতির বাঁশির সুর...",
             songLang: "গানের ভাষা:",
-            targetRegion: "🎯 টার্গেট দেশ ও সোশ্যাল মিডিয়া:",
+            targetRegion: "🎯 টার্গেট দেশ ও সোশ্যাল মিডিয়া:",
             genreLbl: "সুর ও জনরা (Genres):",
             genreSearchPlaceholder: "🔍 জনরা খুঁজুন (বাউল, Rock, Lo-Fi, Classical)...",
             btnCreate: "সম্পূর্ণ গান তৈরি করুন (-১ ক্রেডিট)",
@@ -21,7 +21,7 @@
             about: "আমাদের সম্পর্কে",
             contact: "যোগাযোগ",
             terms: "শর্তাবলী",
-            privacy: "গোপনীয়তা নীতি",
+            privacy: "গোপনীয়তা নীতি",
             refund: "রিফান্ড পলিসি"
         },
         en: {
@@ -181,7 +181,6 @@
         if (document.getElementById("btnDownloadVideoText")) document.getElementById("btnDownloadVideoText").innerText = t.downloadVideo;
         if (document.getElementById("lblLicenseNotice")) document.getElementById("lblLicenseNotice").innerText = t.license;
 
-        // ফুটার অনুবাদ
         const fAbout = document.querySelector("footer a[href=\x27/about\x27]");
         const fContact = document.querySelector("footer a[href=\x27/contact\x27]");
         const fTerms = document.querySelector("footer a[href=\x27/terms\x27]");
@@ -330,7 +329,7 @@
         b.addEventListener("click", () => {
             const added = parseInt(b.dataset.credits);
             updateCredits(userCredits + added);
-            alert(`🎉 পেমেন্ট সফল! ${added} টি ক্রেডিট অ্যাকাউন্টে যুক্ত হয়েছে।`);
+            alert(`🎉 পেমেন্ট সফল! ${added} টি ক্রেডিট অ্যাকাউন্টে যুক্ত হয়েছে।`);
             if (pricingModal) pricingModal.classList.add("hidden");
         });
     });
@@ -437,7 +436,7 @@
                 });
                 const audData = await audRes.json();
 
-                if (statusBox) statusBox.innerText += `[৩/৩] সোশ্যাল মিডিয়ার ভাইরাল MP4 ভিডিও ফ্রেম তৈরি সম্পন্ন হচ্ছে...\n`;
+                if (statusBox) statusBox.innerText += `[৩/৩] সোশ্যাল মিডিয়ার ভাইরাল MP4 ভিডিও ফ্রেম তৈরি সম্পন্ন হচ্ছে...\n`;
                 await fetch("/api/generate-video", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
@@ -473,7 +472,7 @@
                     if (audioPlayer) audioPlayer.play().catch(() => {});
                 }
             } catch(err) {
-                if (statusBox) statusBox.innerText += "\nগান তৈরি করতে সমস্যা হয়েছে। পুনরায় চেষ্টা করুন।";
+                if (statusBox) statusBox.innerText += "\nগান তৈরি করতে সমস্যা হয়েছে। পুনরায় চেষ্টা করুন।";
                 if (badgeStatus) badgeStatus.innerText = "FAILED";
             } finally {
                 btn.disabled = false;
