@@ -22,25 +22,20 @@ app.use("/api/payment", paymentRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/auth", secureAuthRoutes);
 
-// ১. সাধারণ কাস্টমার লগইন পেজ
-app.get("/login", (req, res) => {
-    res.sendFile(path.join(__dirname, "public", "customer-login.html"));
-});
+// কাস্টমার পেজ রাউটস
+app.get("/login", (req, res) => res.sendFile(path.join(__dirname, "public", "customer-login.html")));
+app.get("/about", (req, res) => res.sendFile(path.join(__dirname, "public", "about.html")));
+app.get("/contact", (req, res) => res.sendFile(path.join(__dirname, "public", "contact.html")));
+app.get("/terms", (req, res) => res.sendFile(path.join(__dirname, "public", "terms.html")));
+app.get("/privacy", (req, res) => res.sendFile(path.join(__dirname, "public", "privacy.html")));
+app.get("/refund", (req, res) => res.sendFile(path.join(__dirname, "public", "refund.html")));
 
-// ২. সম্পূর্ণ গোপন এডমিন লগইন গেটওয়ে (সাধারণ কেউ জানবে না)
-app.get("/secret-owner-gateway", (req, res) => {
-    res.sendFile(path.join(__dirname, "public", "admin-login.html"));
-});
+// মালিকের গোপন এডমিন রাউট
+app.get("/secret-owner-gateway", (req, res) => res.sendFile(path.join(__dirname, "public", "admin-login.html")));
+app.get("/owner-dashboard-view", (req, res) => res.sendFile(path.join(__dirname, "public", "admin.html")));
 
-// ৩. মালিকের মূল ড্যাশবোর্ড
-app.get("/owner-dashboard-view", (req, res) => {
-    res.sendFile(path.join(__dirname, "public", "admin.html"));
-});
-
-// কাস্টমার পেজ (হোম)
-app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "public", "index.html"));
-});
+// হোমপেজ
+app.get("*", (req, res) => res.sendFile(path.join(__dirname, "public", "index.html")));
 
 app.listen(PORT, () => {
     console.log(`Server running at port ${PORT}`);

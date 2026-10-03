@@ -9,7 +9,6 @@
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col font-sans selection:bg-indigo-500 selection:text-white">
 
-    <!-- Dynamic Admin Announcement Banner -->
     <div id="liveBanner" class="bg-gradient-to-r from-indigo-900 via-purple-900 to-pink-900 py-1.5 px-4 text-center text-xs text-indigo-100 font-medium border-b border-indigo-800/40">
         🔥 সীমিত সময়ের জন্য নতুন অ্যাকাউন্ট খুললেই ১০ ফ্রি ক্রেডিট উপহার!
     </div>
@@ -27,13 +26,11 @@
             </div>
 
             <div class="flex items-center gap-2.5 flex-wrap">
-                <!-- My Creations Button -->
                 <button id="btnOpenCreations" class="bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold px-3 py-1.5 rounded-xl transition flex items-center gap-1.5 border border-slate-700">
                     <i data-lucide="folder-music" class="w-3.5 h-3.5 text-indigo-400"></i>
                     <span>My Creations (<span id="topCreationsCount">0</span>)</span>
                 </button>
 
-                <!-- Customer Account -->
                 <div id="authContainer" class="flex items-center gap-2">
                     <a href="/login" class="bg-white hover:bg-slate-100 text-slate-900 text-xs font-semibold px-3 py-1.5 rounded-xl transition shadow flex items-center gap-1.5">
                         <i data-lucide="user" class="w-3.5 h-3.5"></i>
@@ -41,7 +38,6 @@
                     </a>
                 </div>
 
-                <!-- Wallet Credits -->
                 <div class="bg-slate-900 border border-slate-700/80 px-3 py-1.5 rounded-xl flex items-center gap-2 shadow-inner">
                     <i data-lucide="coins" class="w-4 h-4 text-amber-400 animate-bounce"></i>
                     <span class="text-xs text-slate-300 font-medium"><span id="creditBalance" class="text-amber-400 font-bold">10</span> <span id="lblCredits">Credits</span></span>
@@ -51,7 +47,6 @@
                     <i data-lucide="zap" class="w-3.5 h-3.5 fill-current"></i> <span id="btnUpgradeText">Get Unlimited</span>
                 </button>
 
-                <!-- বিশ্বব্যাপী সব ভাষা সিলেক্টর (Global Site Language Selector) -->
                 <div class="flex items-center gap-1.5 border-l border-slate-800 pl-3">
                     <i data-lucide="globe" class="w-4 h-4 text-indigo-400"></i>
                     <select id="siteLangSelect" class="bg-slate-900 border border-slate-700 text-slate-200 text-xs px-2.5 py-1.5 rounded-xl outline-none focus:border-indigo-500 font-medium cursor-pointer">
@@ -71,11 +66,9 @@
                     <span class="text-[10px] text-pink-400 bg-pink-950/60 border border-pink-800/60 px-2 py-0.5 rounded-full font-mono">Trending Ideas 🔥</span>
                 </div>
 
-                <!-- Trending Suggestion Chips -->
                 <div id="trendingContainer" class="flex flex-wrap gap-1.5">
                     <button class="trend-chip text-[11px] bg-slate-950 hover:bg-indigo-950/70 border border-slate-800 hover:border-indigo-500 px-2.5 py-1 rounded-lg text-slate-300 transition" data-text="A soulful acoustic love melody walking under the rainy streetlights">🌧️ Rainy Love Ballad</button>
                     <button class="trend-chip text-[11px] bg-slate-950 hover:bg-indigo-950/70 border border-slate-800 hover:border-indigo-500 px-2.5 py-1 rounded-lg text-slate-300 transition" data-text="High-energy EDM drop with futuristic synthesizer bass">⚡ Cyberpunk Beat</button>
-                    <button class="trend-chip text-[11px] bg-slate-950 hover:bg-indigo-950/70 border border-slate-800 hover:border-indigo-500 px-2.5 py-1 rounded-lg text-slate-300 transition" data-text="Relaxing chill Lo-Fi beats for deep late night study sessions">☕ Late Night Lo-Fi</button>
                 </div>
 
                 <textarea id="promptInput" rows="3" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm focus:border-indigo-500 outline-none text-white placeholder:text-slate-600 resize-none transition" placeholder="e.g. A peaceful acoustic melody under the stars..."></textarea>
@@ -86,7 +79,6 @@
                     </select>
                 </div>
 
-                <!-- টার্গেট দেশ ও সোশ্যাল মিডিয়া ফরম্যাট -->
                 <div class="p-3 bg-slate-950/60 border border-slate-800 rounded-xl space-y-2">
                     <label class="block text-xs font-semibold text-indigo-400" id="lblTargetRegion">🎯 Target Country & Dominant Social Media:</label>
                     <select id="countryTargetSelect" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-xs text-slate-200 focus:border-indigo-500 outline-none">
@@ -100,14 +92,13 @@
                     </select>
                 </div>
 
-                <!-- মিউজিক জনরা সার্চ ও ড্রপডাউন -->
                 <div class="space-y-1.5">
                     <div class="flex items-center justify-between">
                         <label class="block text-xs font-medium text-slate-400" id="lblGenre">Musical Tradition / Genre:</label>
                         <span id="genreCount" class="text-[10px] text-indigo-400 font-mono">Loading...</span>
                     </div>
                     
-                    <input type="text" id="genreSearch" placeholder="🔍 Search Genre (e.g. Baul, Rock, Lo-Fi, Classical)..." class="w-full bg-slate-950/70 border border-slate-800 rounded-lg px-3 py-1.5 text-xs text-slate-300 focus:border-indigo-500 outline-none placeholder:text-slate-600">
+                    <input type="text" id="genreSearch" placeholder="🔍 Search Genre (e.g. Baul, Rock, Lo-Fi)..." class="w-full bg-slate-950/70 border border-slate-800 rounded-lg px-3 py-1.5 text-xs text-slate-300 focus:border-indigo-500 outline-none placeholder:text-slate-600">
 
                     <select id="genreSelect" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-slate-200 focus:border-indigo-500 outline-none max-h-48">
                     </select>
@@ -164,7 +155,25 @@
         </div>
     </main>
 
-    <!-- My Creations Modal -->
+    <!-- Footer with all customer pages -->
+    <footer class="border-t border-slate-900 bg-slate-950/80 py-8 px-4 text-xs text-slate-500">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-2">
+                <div class="bg-indigo-600/30 p-1 rounded text-indigo-400"><i data-lucide="music-4" class="w-4 h-4"></i></div>
+                <span class="font-bold text-slate-300">MelodyAI Global Pro</span>
+                <span>• © 2026 All rights reserved</span>
+            </div>
+            <div class="flex flex-wrap items-center gap-6">
+                <a href="/about" class="hover:text-slate-300 transition">About Us</a>
+                <a href="/contact" class="hover:text-slate-300 transition">Contact Us</a>
+                <a href="/terms" class="hover:text-slate-300 transition">Terms of Service</a>
+                <a href="/privacy" class="hover:text-slate-300 transition">Privacy Policy</a>
+                <a href="/refund" class="hover:text-slate-300 transition">Refund Policy</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modals -->
     <div id="creationsModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md flex items-center justify-center z-50 p-4 hidden">
         <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-3xl w-full p-6 shadow-2xl relative max-h-[85vh] flex flex-col">
             <div class="flex items-center justify-between pb-3 border-b border-slate-800">
@@ -172,20 +181,15 @@
                     <i data-lucide="folder-music" class="w-5 h-5 text-indigo-400"></i>
                     <h3 class="text-base font-bold text-white">আমার তৈরি গানসমূহ (My Creations)</h3>
                 </div>
-                <button id="btnCloseCreations" class="text-slate-400 hover:text-white p-1">
-                    <i data-lucide="x" class="w-5 h-5"></i>
-                </button>
+                <button id="btnCloseCreations" class="text-slate-400 hover:text-white p-1"><i data-lucide="x" class="w-5 h-5"></i></button>
             </div>
             <div id="modalCreationsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 overflow-y-auto pr-1"></div>
         </div>
     </div>
 
-    <!-- Pricing Modal -->
     <div id="pricingModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md flex items-center justify-center z-50 p-4 hidden">
         <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-md w-full p-6 shadow-2xl relative text-center">
-            <button id="btnCloseModal" class="absolute top-4 right-4 text-slate-400 hover:text-white">
-                <i data-lucide="x" class="w-5 h-5"></i>
-            </button>
+            <button id="btnCloseModal" class="absolute top-4 right-4 text-slate-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
             <h3 class="text-xl font-bold text-white">Get Studio Credits</h3>
             <p class="text-xs text-slate-400 mt-1 mb-6">গান তৈরি করতে ক্রেডিট রিচার্জ করুন।</p>
             <div class="space-y-3">
