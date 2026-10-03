@@ -325,13 +325,50 @@
         document.getElementById("btnCloseModal").addEventListener("click", () => pricingModal && pricingModal.classList.add("hidden"));
     }
 
-    document.querySelectorAll(".buy-plan-btn").forEach(b => {
-        b.addEventListener("click", () => {
+        document.querySelectorAll(".buy-plan-btn").forEach(b => {
+        b.addEventListener("click", async () => {
             const added = parseInt(b.dataset.credits);
-            updateCredits(userCredits + added);
-            alert(`🎉 পেমেন্ট সফল! ${added} টি ক্রেডিট অ্যাকাউন্টে যুক্ত হয়েছে।`);
-            if (pricingModal) pricingModal.classList.add("hidden");
+            const planTitle = b.querySelector("div > div.font-bold") ? b.querySelector("div > div.font-bold").innerText : "Studio Pack";
+            const priceText = b.querySelector("div.font-black") ? b.querySelector("div.font-black").innerText.replace(/[^0-9]/g, "") : "399";
+            
+            const currentUser = JSON.parse(localStorage.getItem("melody_user") || "{}");
+
+            try {
+                const res = await fetch("/api/payment/create-order", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        plan: planTitle,
+                        amount: parseInt(priceText),
+                        credits: added,
+                        userEmail: currentUser.email || "guest@melodyai.pro",
+                        userPhone: currentUser.phone || ""
+                    })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    // সফল পেমেন্ট ভেরিফিকেশন কল
+                    const vRes = await fetch("/api/payment/verify-payment", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            orderId: data.orderId,
+                            credits: added,
+                            userEmail: currentUser.email || "",
+                            userPhone: currentUser.phone || ""
+                        })
+                    });
+                    const vData = await vRes.json();
+                    
+                    updateCredits(userCredits + added);
+                    alert(`🎉 পেমেন্ট সফল! ${added} টি ক্রেডিট অ্যাকাউন্টে যুক্ত হয়েছে।`);
+                    pricingModal.classList.add("hidden");
+                }
+            } catch(e) {
+                alert("পেমেন্ট প্রসেসিংয়ে সমস্যা হয়েছে।");
+            }
         });
+    });
     });
 
     updateCredits(userCredits);
@@ -480,3 +517,4 @@
         });
     }
 });
+
