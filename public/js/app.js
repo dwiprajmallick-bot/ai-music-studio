@@ -57,11 +57,15 @@
 
     let currentUser = JSON.parse(localStorage.getItem("melody_user") || "null");
     let userCredits = parseInt(localStorage.getItem("melody_credits") || "10");
+    let savedCreations = JSON.parse(localStorage.getItem("melody_creations") || "[]");
+
     const creditBalanceEl = document.getElementById("creditBalance");
     const btnGoogleLogin = document.getElementById("btnGoogleLogin");
     const userBadge = document.getElementById("userBadge");
     const userAvatar = document.getElementById("userAvatar");
     const userName = document.getElementById("userName");
+    const creationsGrid = document.getElementById("creationsGrid");
+    const savedCountBadge = document.getElementById("savedCountBadge");
 
     function updateCredits(count) {
         userCredits = count;
@@ -69,13 +73,48 @@
         creditBalanceEl.innerText = userCredits;
     }
 
-    // Referral Detection from URL (?ref=user_id)
     const urlParams = new URLSearchParams(window.location.search);
     const refBy = urlParams.get("ref");
     if (refBy && !localStorage.getItem("referred_applied")) {
         updateCredits(userCredits + 5);
         localStorage.setItem("referred_applied", "true");
-        alert("🎉 রেফারেলের মাধ্যমে যোগ দেওয়ায় আপনি পেয়েছেন +৫ বোনাস ক্রেডিট!");
+        alert("🎉 রেফারেলের মাধ্যমে যোগ দেওয়ায় আপনি পেয়েছেন +৫ বোনাস ক্রেডিট!");
+    }
+
+    function renderCreations() {
+        savedCountBadge.innerText = `${savedCreations.length} Tracks`;
+        if (savedCreations.length === 0) {
+            creationsGrid.innerHTML = `
+                <div id="emptyCreations" class="col-span-full py-10 text-center text-slate-500 text-xs">
+                    <i data-lucide="disc-3" class="w-8 h-8 mx-auto mb-2 opacity-40"></i>
+                    No saved tracks yet. Generate your first viral track above!
+                </div>
+            `;
+            if (window.lucide) { lucide.createIcons(); }
+            return;
+        }
+
+        creationsGrid.innerHTML = savedCreations.map((c, i) => `
+            <div class="bg-slate-950 border border-slate-800 rounded-xl p-4 flex flex-col justify-between space-y-3 hover:border-indigo-500/50 transition">
+                <div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-[10px] text-indigo-400 font-mono">${c.genre}</span>
+                        <span class="text-[10px] text-slate-500 font-mono">${c.date}</span>
+                    </div>
+                    <h4 class="text-xs font-semibold text-white mt-1 truncate">${c.title}</h4>
+                    <p class="text-[10px] text-slate-400 mt-0.5 line-clamp-2">${c.lyrics.slice(0, 80)}...</p>
+                </div>
+                <audio controls src="${c.audioUrl}" class="w-full h-7"></audio>
+                <div class="flex items-center justify-between pt-2 border-t border-slate-900">
+                    <span class="text-[9px] text-emerald-400 font-mono">${c.licenseId}</span>
+                    <a href="${c.audioUrl}" download="track-${i+1}.mp3" class="text-[10px] text-indigo-400 hover:text-indigo-300 flex items-center gap-1">
+                        <i data-lucide="download" class="w-3 h-3"></i> MP3
+                    </a>
+                </div>
+            </div>
+        `).join("");
+
+        if (window.lucide) { lucide.createIcons(); }
     }
 
     function renderUser() {
@@ -110,17 +149,17 @@
                 currentUser = data.user;
                 localStorage.setItem("melody_user", JSON.stringify(currentUser));
                 renderUser();
-                alert(`স্বাগতম ${currentUser.name}! আপনার অ্যাকাউন্টে ${currentUser.credits} টি ক্রেডিট রয়েছে।`);
+                alert(`স্বাগতম ${currentUser.name}! আপনার অ্যাকাউন্টে ${currentUser.credits} টি ক্রেডিট রয়েছে।`);
             }
         } catch(e) {
-            alert("লগইন সম্পন্ন হতে সমস্যা হয়েছে।");
+            alert("লগইন সম্পন্ন হতে সমস্যা হয়েছে।");
         }
     });
 
     renderUser();
     updateCredits(userCredits);
+    renderCreations();
 
-    // Refer Modal & Link Generation
     const referModal = document.getElementById("referModal");
     const refLinkInput = document.getElementById("refLinkInput");
     document.getElementById("btnReferModal").addEventListener("click", () => {
@@ -131,10 +170,9 @@
     document.getElementById("btnCloseRefer").addEventListener("click", () => referModal.classList.add("hidden"));
     document.getElementById("btnCopyRef").addEventListener("click", () => {
         navigator.clipboard.writeText(refLinkInput.value);
-        alert("রেফারেল লিঙ্ক কপি হয়েছে! বন্ধুদের সাথে শেয়ার করে ফ্রি ক্রেডিট নিন।");
+        alert("রেফারেল লিঙ্ক কপি হয়েছে! বন্ধুদের সাথে শেয়ার করে ফ্রি ক্রেডিট নিন।");
     });
 
-    // Trending Prompts
     document.querySelectorAll(".trend-chip").forEach(chip => {
         chip.addEventListener("click", () => {
             document.getElementById("promptInput").value = chip.dataset.text;
@@ -166,7 +204,6 @@
     let mediaRecorder = null;
     let recordedChunks = [];
 
-    // Pricing & Instant Payment Checkout
     const pricingModal = document.getElementById("pricingModal");
     document.getElementById("btnPricing").addEventListener("click", () => pricingModal.classList.remove("hidden"));
     document.getElementById("btnCloseModal").addEventListener("click", () => pricingModal.classList.add("hidden"));
@@ -193,12 +230,12 @@
                             body: JSON.stringify({ orderId: orderData.orderId, paymentStatus: "PAID" })
                         });
                         updateCredits(userCredits + added);
-                        alert(`🎉 পেমেন্ট সফল! আপনার অ্যাকাউন্টে ${added} টি ক্রেডিট যোগ করা হয়েছে।`);
+                        alert(`🎉 পেমেন্ট সফল! আপনার অ্যাকাউন্টে ${added} টি ক্রেডিট যোগ করা হয়েছে।`);
                         pricingModal.classList.add("hidden");
                     }
                 }
             } catch (err) {
-                alert("পেমেন্ট গেটওয়ে প্রসেস করতে ব্যর্থ হয়েছে।");
+                alert("পেমেন্ট গেটওয়ে প্রসেস করতে ব্যর্থ হয়েছে।");
             }
         });
     });
@@ -375,7 +412,7 @@
             });
             const lyrData = await lyrRes.json();
 
-            statusBox.innerText += `[২/৩] স্টুডিও কোয়ালিটি হারমোনিক্স এবং অডিও প্রসেস হচ্ছে...\n`;
+            statusBox.innerText += `[২/৩] স্টুডিও কোয়ালিটি হারমোনিক্স এবং অডিও প্রসেস হচ্ছে...\n`;
 
             const audRes = await fetch("/api/generate-audio", {
                 method: "POST",
@@ -384,7 +421,7 @@
             });
             const audData = await audRes.json();
 
-            statusBox.innerText += `[৩/৩] সোশ্যাল মিডিয়ার ভাইরাল MP4 ভিডিও ফ্রেম এনকোড সম্পন্ন হচ্ছে...\n`;
+            statusBox.innerText += `[৩/৩] সোশ্যাল মিডিয়ার ভাইরাল MP4 ভিডিও ফ্রেম এনকোড সম্পন্ন হচ্ছে...\n`;
             await fetch("/api/generate-video", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -404,11 +441,24 @@
                 badgeStatus.innerText = "READY";
                 badgeStatus.className = "text-[10px] bg-emerald-950 text-emerald-400 px-2 py-0.5 rounded font-mono";
 
+                // Save to My Creations Gallery
+                const newCreation = {
+                    title: text.slice(0, 30),
+                    genre: genre,
+                    lyrics: lyrData.lyrics,
+                    audioUrl: audData.audioUrl,
+                    licenseId: audData.licenseId,
+                    date: new Date().toLocaleDateString()
+                };
+                savedCreations.unshift(newCreation);
+                localStorage.setItem("melody_creations", JSON.stringify(savedCreations));
+                renderCreations();
+
                 startVisualizerAndRecorder();
                 audioPlayer.play().catch(() => {});
             }
         } catch(err) {
-            statusBox.innerText += "\nগান তৈরি করতে সমস্যা হয়েছে। পুনরায় চেষ্টা করুন।";
+            statusBox.innerText += "\nগান তৈরি করতে সমস্যা হয়েছে। পুনরায় চেষ্টা করুন।";
             badgeStatus.innerText = "FAILED";
         } finally {
             btn.disabled = false;
@@ -419,12 +469,12 @@
         if (navigator.share) {
             navigator.share({
                 title: "My AI Song",
-                text: "MelodyAI Pro দিয়ে তৈরি আমার গান শুনুন!",
+                text: "MelodyAI Pro দিয়ে তৈরি আমার গান শুনুন!",
                 url: window.location.href
             }).catch(() => {});
         } else {
             navigator.clipboard.writeText(window.location.href);
-            alert("ওয়েবসাইটের লিঙ্ক কপি করা হয়েছে!");
+            alert("ওয়েবসাইটের লিঙ্ক কপি করা হয়েছে!");
         }
     });
 });
