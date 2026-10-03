@@ -5,6 +5,7 @@ require("dotenv").config();
 
 const apiRoutes = require("./src/routes/api");
 const paymentRoutes = require("./src/routes/payment");
+const authRoutes = require("./src/routes/auth");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -17,6 +18,7 @@ app.use("/storage", express.static(path.join(__dirname, "storage")));
 // API রাউটস
 app.use("/api", apiRoutes);
 app.use("/api/payment", paymentRoutes);
+app.use("/api/auth", authRoutes);
 
 // ফ্রন্টএন্ড রুট
 app.get("*", (req, res) => {
