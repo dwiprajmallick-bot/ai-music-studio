@@ -3,7 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MelodyAI Pro - Global AI Studio</title>
+    <title>MelodyAI Pro - Create & Export Viral AI Music</title>
+    
+    <!-- WhatsApp & Social Media Preview Cards (Open Graph / Twitter) -->
+    <meta property="og:title" content="MelodyAI Pro - Global AI Music & Viral Video Engine">
+    <meta property="og:description" content="Generate 100% royalty-free viral studio music and MP4 videos in any language in seconds.">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=1200&auto=format&fit=crop&q=80">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="MelodyAI Pro - AI Music & Video Studio">
+    <meta name="twitter:description" content="Create viral tracks for TikTok, Reels, and YouTube Shorts instantly.">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
@@ -21,7 +31,13 @@
                 </div>
             </div>
 
-            <div class="flex items-center gap-3">
+            <div class="flex items-center gap-2.5 flex-wrap">
+                <!-- Refer & Earn Viral Button -->
+                <button id="btnReferModal" class="bg-indigo-950/80 border border-indigo-700/60 hover:bg-indigo-900 text-indigo-300 text-xs font-semibold px-3 py-1.5 rounded-xl transition flex items-center gap-1.5">
+                    <i data-lucide="gift" class="w-3.5 h-3.5 text-pink-400 animate-bounce"></i>
+                    <span>Free +5 Credits</span>
+                </button>
+
                 <!-- User Profile & Login Badge -->
                 <div id="authContainer" class="flex items-center gap-2">
                     <button id="btnGoogleLogin" class="bg-white hover:bg-slate-100 text-slate-900 text-xs font-semibold px-3 py-1.5 rounded-xl transition shadow flex items-center gap-2">
@@ -35,7 +51,7 @@
                 </div>
 
                 <div class="bg-slate-900 border border-slate-700/80 px-3 py-1.5 rounded-xl flex items-center gap-2 shadow-inner">
-                    <i data-lucide="coins" class="w-4 h-4 text-amber-400 animate-bounce"></i>
+                    <i data-lucide="coins" class="w-4 h-4 text-amber-400"></i>
                     <span class="text-xs text-slate-300 font-medium"><span id="creditBalance" class="text-amber-400 font-bold">10</span> <span id="lblCredits">Credits</span></span>
                 </div>
 
@@ -55,9 +71,19 @@
     <main class="flex-1 max-w-7xl w-full mx-auto p-4 md:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
         <div class="lg:col-span-5 bg-slate-900/80 border border-slate-800 rounded-2xl p-5 flex flex-col justify-between shadow-xl">
             <div class="space-y-4">
-                <h2 class="text-sm font-semibold text-slate-200 flex items-center gap-2" id="titleInputBox">
-                    <i data-lucide="sparkles" class="w-4 h-4 text-indigo-400"></i> Write Your Song Concept
-                </h2>
+                <div class="flex items-center justify-between">
+                    <h2 class="text-sm font-semibold text-slate-200 flex items-center gap-2" id="titleInputBox">
+                        <i data-lucide="sparkles" class="w-4 h-4 text-indigo-400"></i> Write Your Song Concept
+                    </h2>
+                    <span class="text-[10px] text-pink-400 bg-pink-950/60 border border-pink-800/60 px-2 py-0.5 rounded-full font-mono">Trending Ideas 🔥</span>
+                </div>
+
+                <!-- Trending Suggestion Chips -->
+                <div class="flex flex-wrap gap-1.5">
+                    <button class="trend-chip text-[11px] bg-slate-950 hover:bg-indigo-950/70 border border-slate-800 hover:border-indigo-500 px-2.5 py-1 rounded-lg text-slate-300 transition" data-text="A soulful acoustic love melody walking under the rainy streetlights">🌧️ Rainy Love Ballad</button>
+                    <button class="trend-chip text-[11px] bg-slate-950 hover:bg-indigo-950/70 border border-slate-800 hover:border-indigo-500 px-2.5 py-1 rounded-lg text-slate-300 transition" data-text="High-energy EDM drop with futuristic synthesizer bass">⚡ Cyberpunk Beat</button>
+                    <button class="trend-chip text-[11px] bg-slate-950 hover:bg-indigo-950/70 border border-slate-800 hover:border-indigo-500 px-2.5 py-1 rounded-lg text-slate-300 transition" data-text="Relaxing chill Lo-Fi beats for deep late night study sessions">☕ Late Night Lo-Fi</button>
+                </div>
 
                 <textarea id="promptInput" rows="3" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm focus:border-indigo-500 outline-none placeholder:text-slate-600 resize-none transition" placeholder="e.g. A peaceful acoustic melody under the stars..."></textarea>
                 
@@ -146,6 +172,26 @@
         </div>
     </main>
 
+    <!-- Refer & Earn Modal -->
+    <div id="referModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md flex items-center justify-center z-50 p-4 hidden">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-md w-full p-6 shadow-2xl relative text-center">
+            <button id="btnCloseRefer" class="absolute top-4 right-4 text-slate-400 hover:text-white">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+            <div class="w-12 h-12 bg-pink-500/10 border border-pink-500/20 text-pink-400 rounded-2xl flex items-center justify-center mx-auto mb-3">
+                <i data-lucide="gift" class="w-6 h-6"></i>
+            </div>
+            <h3 class="text-lg font-bold text-white">Refer Friends & Earn Credits</h3>
+            <p class="text-xs text-slate-400 mt-1">Share your unique link. When someone joins, you both receive +5 Free Studio Credits!</p>
+            
+            <div class="mt-4 p-2 bg-slate-950 border border-slate-800 rounded-xl flex items-center justify-between gap-2">
+                <input id="refLinkInput" type="text" readonly class="bg-transparent text-xs text-indigo-300 w-full outline-none font-mono">
+                <button id="btnCopyRef" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs px-3 py-1.5 rounded-lg font-medium transition">Copy</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pricing Modal -->
     <div id="pricingModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md flex items-center justify-center z-50 p-4 hidden">
         <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-2xl w-full p-6 shadow-2xl relative">
             <button id="btnCloseModal" class="absolute top-4 right-4 text-slate-400 hover:text-white">

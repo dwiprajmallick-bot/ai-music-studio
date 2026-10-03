@@ -69,6 +69,15 @@
         creditBalanceEl.innerText = userCredits;
     }
 
+    // Referral Detection from URL (?ref=user_id)
+    const urlParams = new URLSearchParams(window.location.search);
+    const refBy = urlParams.get("ref");
+    if (refBy && !localStorage.getItem("referred_applied")) {
+        updateCredits(userCredits + 5);
+        localStorage.setItem("referred_applied", "true");
+        alert("🎉 রেফারেলের মাধ্যমে যোগ দেওয়ায় আপনি পেয়েছেন +৫ বোনাস ক্রেডিট!");
+    }
+
     function renderUser() {
         if (currentUser) {
             btnGoogleLogin.classList.add("hidden");
@@ -101,15 +110,36 @@
                 currentUser = data.user;
                 localStorage.setItem("melody_user", JSON.stringify(currentUser));
                 renderUser();
-                alert(`স্বাগতম ${currentUser.name}! আপনার অ্যাকাউন্টে ${currentUser.credits} টি ক্রেডিট যোগ হয়েছে।`);
+                alert(`স্বাগতম ${currentUser.name}! আপনার অ্যাকাউন্টে ${currentUser.credits} টি ক্রেডিট রয়েছে।`);
             }
         } catch(e) {
-            alert("লগইন সম্পন্ন হতে সমস্যা হয়েছে।");
+            alert("লগইন সম্পন্ন হতে সমস্যা হয়েছে।");
         }
     });
 
     renderUser();
     updateCredits(userCredits);
+
+    // Refer Modal & Link Generation
+    const referModal = document.getElementById("referModal");
+    const refLinkInput = document.getElementById("refLinkInput");
+    document.getElementById("btnReferModal").addEventListener("click", () => {
+        const uId = currentUser ? currentUser.id : "vip" + Math.floor(Math.random() * 8999 + 1000);
+        refLinkInput.value = `${window.location.origin}?ref=${uId}`;
+        referModal.classList.remove("hidden");
+    });
+    document.getElementById("btnCloseRefer").addEventListener("click", () => referModal.classList.add("hidden"));
+    document.getElementById("btnCopyRef").addEventListener("click", () => {
+        navigator.clipboard.writeText(refLinkInput.value);
+        alert("রেফারেল লিঙ্ক কপি হয়েছে! বন্ধুদের সাথে শেয়ার করে ফ্রি ক্রেডিট নিন।");
+    });
+
+    // Trending Prompts
+    document.querySelectorAll(".trend-chip").forEach(chip => {
+        chip.addEventListener("click", () => {
+            document.getElementById("promptInput").value = chip.dataset.text;
+        });
+    });
 
     const siteLangSelect = document.getElementById("siteLangSelect");
     const songLangSelect = document.getElementById("songLangSelect");
@@ -155,7 +185,7 @@
                 const orderData = await res.json();
 
                 if (orderData.success) {
-                    const confirmPay = confirm(`💳 পেমেন্ট গেটওয়ে (${orderData.currency} $${amount})\n\nআপনি কি ${added} টি ক্রেডিট কিনতে চান? (UPI / Card Ready)`);
+                    const confirmPay = confirm(`💳 পেমেন্ট গেটওয়ে (${orderData.currency} $${amount})\n\nআপনি কি ${added} টি ক্রেডিট কিনতে চান? (UPI / Cards Ready)`);
                     if (confirmPay) {
                         await fetch("/api/payment/verify-payment", {
                             method: "POST",
@@ -163,12 +193,12 @@
                             body: JSON.stringify({ orderId: orderData.orderId, paymentStatus: "PAID" })
                         });
                         updateCredits(userCredits + added);
-                        alert(`🎉 পেমেন্ট সফল! আপনার অ্যাকাউন্টে ${added} টি ক্রেডিট যোগ করা হয়েছে।`);
+                        alert(`🎉 পেমেন্ট সফল! আপনার অ্যাকাউন্টে ${added} টি ক্রেডিট যোগ করা হয়েছে।`);
                         pricingModal.classList.add("hidden");
                     }
                 }
             } catch (err) {
-                alert("পেমেন্ট গেটওয়ে প্রসেস করতে ব্যর্থ হয়েছে।");
+                alert("পেমেন্ট গেটওয়ে প্রসেস করতে ব্যর্থ হয়েছে।");
             }
         });
     });
@@ -378,7 +408,7 @@
                 audioPlayer.play().catch(() => {});
             }
         } catch(err) {
-            statusBox.innerText += "\nগান তৈরি করতে সমস্যা হয়েছে। পুনরায় চেষ্টা করুন।";
+            statusBox.innerText += "\nগান তৈরি করতে সমস্যা হয়েছে। পুনরায় চেষ্টা করুন।";
             badgeStatus.innerText = "FAILED";
         } finally {
             btn.disabled = false;
@@ -389,12 +419,12 @@
         if (navigator.share) {
             navigator.share({
                 title: "My AI Song",
-                text: "MelodyAI Pro দিয়ে তৈরি আমার গান শুনুন!",
+                text: "MelodyAI Pro দিয়ে তৈরি আমার গান শুনুন!",
                 url: window.location.href
             }).catch(() => {});
         } else {
             navigator.clipboard.writeText(window.location.href);
-            alert("ওয়েবসাইটের লিংক কপি করা হয়েছে!");
+            alert("ওয়েবসাইটের লিঙ্ক কপি করা হয়েছে!");
         }
     });
 });
