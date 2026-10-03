@@ -8,32 +8,39 @@
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col font-sans">
-    <header class="border-b border-slate-800 p-4 bg-slate-900/80">
+    <header class="border-b border-slate-800 p-4 bg-slate-900/80 sticky top-0 z-50">
         <div class="max-w-6xl mx-auto flex items-center justify-between">
             <a href="/" class="flex items-center gap-2">
                 <div class="bg-indigo-600 p-2 rounded-xl text-white"><i data-lucide="music-4" class="w-5 h-5"></i></div>
                 <span class="font-bold text-lg text-white">MelodyAI Global Pro</span>
             </a>
-            <a href="/" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-1.5 rounded-lg">হোমপেজে ফিরুন</a>
+            <div class="flex items-center gap-3">
+                <select id="subPageLangSelect" class="bg-slate-900 border border-slate-700 text-slate-200 text-xs px-2.5 py-1.5 rounded-xl outline-none">
+                    <option value="bn">🇧🇩 বাংলা</option>
+                    <option value="en">🌐 English</option>
+                    <option value="hi">🇮🇳 हिन्दी</option>
+                </select>
+                <a href="/" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-1.5 rounded-lg" data-i18n="backHome">হোমপেজে ফিরুন</a>
+            </div>
         </div>
     </header>
 
     <main class="flex-1 max-w-4xl mx-auto p-6 md:p-12 space-y-6">
-        <h1 class="text-2xl font-bold text-white">ব্যবহারের শর্তাবলী (Terms of Service)</h1>
-        <p class="text-slate-400 text-xs">সর্বশেষ আপডেট: অক্টোবর ২০২৬</p>
+        <h1 class="text-2xl font-bold text-white" data-i18n="termsTitle">ব্যবহারের শর্তাবলী (Terms of Service)</h1>
+        <p class="text-slate-400 text-xs" data-i18n="termsSub">সর্বশেষ আপডেট: অক্টোবর ২০২৬</p>
 
         <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 md:p-8 space-y-5 text-xs text-slate-300 leading-relaxed">
             <section>
-                <h3 class="text-sm font-bold text-white mb-1">১. প্ল্যাটফর্ম ব্যবহার</h3>
-                <p>MelodyAI Pro ব্যবহার করার মাধ্যমে আপনি সম্মত হচ্ছেন যে আপনি কোনো প্রকার বেআইনি, অবমাননাকর বা হিংসাত্মক গান বা কনটেন্ট তৈরিতে এই প্ল্যাটফর্ম ব্যবহার করবেন না।</p>
+                <h3 class="text-sm font-bold text-white mb-1" data-i18n="term1Title">১. প্ল্যাটফর্ম ব্যবহার</h3>
+                <p data-i18n="term1Text">MelodyAI Pro ব্যবহার করার মাধ্যমে আপনি সম্মত হচ্ছেন যে আপনি কোনো প্রকার বেআইনি বা অবমাননাকর কনটেন্ট তৈরিতে এই প্ল্যাটফর্ম ব্যবহার করবেন না।</p>
             </section>
             <section>
-                <h3 class="text-sm font-bold text-white mb-1">২. কমার্শিয়াল রাইটস ও লাইসেন্সিং</h3>
-                <p>আপনার অ্যাকাউন্টের মাধ্যমে সফলভাবে তৈরি করা গানগুলোর ওপর আপনার বাণিজ্যিক ব্যবহারের পূর্ণ অধিকার থাকবে। আপনি এগুলি ইউটিউব, টিকটক, স্পটিফাই বা রিলসে মনিটাইজ করার পূর্ণ অধিকার পাবেন।</p>
+                <h3 class="text-sm font-bold text-white mb-1" data-i18n="term2Title">২. কমার্শিয়াল রাইটস ও লাইসেন্সিং</h3>
+                <p data-i18n="term2Text">আপনার অ্যাকাউন্টের মাধ্যমে সফলভাবে তৈরি করা গানগুলোর ওপর আপনার বাণিজ্যিক ব্যবহারের পূর্ণ অধিকার থাকবে।</p>
             </section>
             <section>
-                <h3 class="text-sm font-bold text-white mb-1">৩. ক্রেডিট ও অ্যাকাউন্ট পলিসি</h3>
-                <p>প্রতিটি গান বা ট্র্যাক তৈরিতে নির্দিষ্ট পরিমাণ ক্রেডিট ব্যয় হয়। ক্রেডিট রিচার্জ করার পর তা ব্যবহারযোগ্য থাকে। অনুপযুক্ত ব্যবহারের কারণে যে কোনো অ্যাকাউন্ট সাময়িকভাবে স্থগিত করার অধিকার কর্তৃপক্ষ সংরক্ষণ করে।</p>
+                <h3 class="text-sm font-bold text-white mb-1" data-i18n="term3Title">৩. ক্রেডিট ও অ্যাকাউন্ট পলিসি</h3>
+                <p data-i18n="term3Text">প্রতিটি গান বা ট্র্যাক তৈরিতে নির্দিষ্ট পরিমাণ ক্রেডিট ব্যয় হয়। অনুপযুক্ত ব্যবহারের কারণে যে কোনো অ্যাকাউন্ট সাময়িকভাবে স্থগিত করার অধিকার কর্তৃপক্ষ সংরক্ষণ করে।</p>
             </section>
         </div>
     </main>
@@ -41,6 +48,7 @@
     <footer class="border-t border-slate-900 py-6 text-center text-xs text-slate-500">
         © 2026 MelodyAI Pro. All rights reserved.
     </footer>
+    <script src="/js/i18n-pages.js"></script>
     <script>lucide.createIcons();</script>
 </body>
 </html>

@@ -8,44 +8,51 @@
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col font-sans">
-    <header class="border-b border-slate-800 p-4 bg-slate-900/80">
+    <header class="border-b border-slate-800 p-4 bg-slate-900/80 sticky top-0 z-50">
         <div class="max-w-6xl mx-auto flex items-center justify-between">
             <a href="/" class="flex items-center gap-2">
                 <div class="bg-indigo-600 p-2 rounded-xl text-white"><i data-lucide="music-4" class="w-5 h-5"></i></div>
                 <span class="font-bold text-lg text-white">MelodyAI Global Pro</span>
             </a>
-            <a href="/" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-1.5 rounded-lg">হোমপেজে ফিরুন</a>
+            <div class="flex items-center gap-3">
+                <select id="subPageLangSelect" class="bg-slate-900 border border-slate-700 text-slate-200 text-xs px-2.5 py-1.5 rounded-xl outline-none">
+                    <option value="bn">🇧🇩 বাংলা</option>
+                    <option value="en">🌐 English</option>
+                    <option value="hi">🇮🇳 हिन्दी</option>
+                </select>
+                <a href="/" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-1.5 rounded-lg" data-i18n="backHome">হোমপেজে ফিরুন</a>
+            </div>
         </div>
     </header>
 
     <main class="flex-1 max-w-3xl mx-auto p-6 md:p-12 w-full space-y-6">
         <div class="text-center space-y-2">
-            <h1 class="text-2xl font-bold text-white">যোগাযোগ করুন (Contact Us)</h1>
-            <p class="text-slate-400 text-xs">আপনার কোনো প্রশ্ন, অভিযোগ বা ফিডব্যাক থাকলে আমাদের বার্তা পাঠান।</p>
+            <h1 class="text-2xl font-bold text-white" data-i18n="contactTitle">যোগাযোগ করুন (Contact Us)</h1>
+            <p class="text-slate-400 text-xs" data-i18n="contactSub">আপনার কোনো প্রশ্ন, অভিযোগ বা ফিডব্যাক থাকলে আমাদের বার্তা পাঠান।</p>
         </div>
 
         <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 md:p-8 space-y-6 shadow-xl">
             <form id="contactForm" class="space-y-4">
                 <div>
-                    <label class="block text-xs font-semibold text-slate-300 mb-1">আপনার নাম</label>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1" data-i18n="nameLabel">আপনার নাম</label>
                     <input type="text" required class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-white outline-none focus:border-indigo-500" placeholder="Dwipraj Mallick">
                 </div>
                 <div>
-                    <label class="block text-xs font-semibold text-slate-300 mb-1">ইমেইল এড্রেস</label>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1" data-i18n="emailLabel">ইমেইল এড্রেস</label>
                     <input type="email" required class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-white outline-none focus:border-indigo-500" placeholder="user@gmail.com">
                 </div>
                 <div>
-                    <label class="block text-xs font-semibold text-slate-300 mb-1">বার্তা বা সমস্যা</label>
-                    <textarea rows="4" required class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-white outline-none focus:border-indigo-500 resize-none" placeholder="আপনার সমস্যা বা বার্তাটি লিখুন..."></textarea>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1" data-i18n="messageLabel">বার্তা বা সমস্যা</label>
+                    <textarea rows="4" required class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-white outline-none focus:border-indigo-500 resize-none" placeholder="..."></textarea>
                 </div>
                 <button type="submit" class="w-full py-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold transition flex items-center justify-center gap-2">
-                    <i data-lucide="send" class="w-4 h-4"></i> বার্তা পাঠান
+                    <i data-lucide="send" class="w-4 h-4"></i> <span data-i18n="sendBtn">বার্তা পাঠান</span>
                 </button>
             </form>
 
             <div class="pt-6 border-t border-slate-800/80 flex flex-wrap items-center justify-between text-xs text-slate-400 gap-3">
                 <div class="flex items-center gap-2"><i data-lucide="mail" class="w-4 h-4 text-indigo-400"></i> support@melodyai.pro</div>
-                <div class="flex items-center gap-2"><i data-lucide="clock" class="w-4 h-4 text-emerald-400"></i> ২৪/৭ গ্রাহক সহায়তা</div>
+                <div class="flex items-center gap-2"><i data-lucide="clock" class="w-4 h-4 text-emerald-400"></i> <span data-i18n="supportHours">২৪/৭ গ্রাহক সহায়তা</span></div>
             </div>
         </div>
     </main>
@@ -53,11 +60,12 @@
     <footer class="border-t border-slate-900 py-6 text-center text-xs text-slate-500">
         © 2026 MelodyAI Pro. All rights reserved.
     </footer>
+    <script src="/js/i18n-pages.js"></script>
     <script>
         lucide.createIcons();
         document.getElementById("contactForm").addEventListener("submit", (e) => {
             e.preventDefault();
-            alert("ধন্যবাদ! আপনার বার্তাটি আমাদের সাপোর্টে জমা হয়েছে। খুব শীঘ্রই আপনার ইমেইলে উত্তর দেওয়া হবে।");
+            alert("Message received! Our support team will get back to you shortly.");
             e.target.reset();
         });
     </script>

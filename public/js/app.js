@@ -1,16 +1,15 @@
 ﻿document.addEventListener("DOMContentLoaded", async () => {
     if (window.lucide) { lucide.createIcons(); }
 
-    // অনুবাদ ডিকশনারি
     const translations = {
         bn: {
-            headerDesc: "বিশ্বমানের সম্পূর্ণ স্বয়ংক্রিয় এআই মিউজিক ও সোশ্যাল ভিডিও প্ল্যাটফর্ম",
+            headerDesc: "বিশ্বমানের সম্পূর্ণ স্বয়ংক্রিয় এআই মিউজিক ও সোশ্যাল ভিডিও প্ল্যাটফর্ম",
             creditsText: "ক্রেডিট অবশিষ্ট",
             upgradeText: "আনলিমিটেড নিন",
             titleInput: "আপনার গানের ভাবনা লিখুন",
-            placeholder: "যেমন: বর্ষার রাতে নদীর পাড়ে দাঁড়িয়ে ফেলে আসা স্মৃতির বাঁশির সুর...",
+            placeholder: "যেমন: বর্ষার রাতে নদীর পাড়ে দাঁড়িয়ে ফেলে আসা স্মৃতির বাঁশির সুর...",
             songLang: "গানের ভাষা:",
-            targetRegion: "🎯 টার্গেট দেশ ও সোশ্যাল মিডিয়া:",
+            targetRegion: "🎯 টার্গেট দেশ ও সোশ্যাল মিডিয়া:",
             genreLbl: "সুর ও জনরা (Genres):",
             genreSearchPlaceholder: "🔍 জনরা খুঁজুন (বাউল, Rock, Lo-Fi, Classical)...",
             btnCreate: "সম্পূর্ণ গান তৈরি করুন (-১ ক্রেডিট)",
@@ -18,7 +17,12 @@
             readyMsg: "ভাবনা লিখুন এবং গান তৈরি করুন বাটনে চাপ দিন।",
             downloadAudio: "MP3 অডিও",
             downloadVideo: "MP4 ভিডিও",
-            license: "১০০% বাণিজ্যিক ও কপিরাইট মুক্ত লাইসেন্স অন্তর্ভুক্ত"
+            license: "১০০% বাণিজ্যিক ও কপিরাইট মুক্ত লাইসেন্স অন্তর্ভুক্ত",
+            about: "আমাদের সম্পর্কে",
+            contact: "যোগাযোগ",
+            terms: "শর্তাবলী",
+            privacy: "গোপনীয়তা নীতি",
+            refund: "রিফান্ড পলিসি"
         },
         en: {
             headerDesc: "Universal AI Music & Country-Targeted Viral Studio",
@@ -35,7 +39,12 @@
             readyMsg: "Enter your prompt and click Generate Track to begin.",
             downloadAudio: "MP3",
             downloadVideo: "MP4 Video",
-            license: "100% Commercial Copyright Free Certificate Included"
+            license: "100% Commercial Copyright Free Certificate Included",
+            about: "About Us",
+            contact: "Contact Us",
+            terms: "Terms of Service",
+            privacy: "Privacy Policy",
+            refund: "Refund Policy"
         },
         hi: {
             headerDesc: "विश्वस्तरीय स्वचालित एआई संगीत एवं सोशल मीडिया वीडियो स्टूडियो",
@@ -52,41 +61,12 @@
             readyMsg: "विचार लिखें और गीत बनाएं बटन दबाएं।",
             downloadAudio: "MP3 ऑडियो",
             downloadVideo: "MP4 वीडियो",
-            license: "100% कमर्शियल कॉपीराइट फ्री लाइसेंस शामिल"
-        },
-        es: {
-            headerDesc: "Estudio Universal de Música IA y Videos Virales",
-            creditsText: "Créditos",
-            upgradeText: "Obtener Ilimitado",
-            titleInput: "Escribe el concepto de tu canción",
-            placeholder: "ej. Una melodía acústica bajo una noche lluviosa...",
-            songLang: "Idioma de la canción:",
-            targetRegion: "🎯 País y Redes Sociales:",
-            genreLbl: "Género Musical:",
-            genreSearchPlaceholder: "🔍 Buscar género...",
-            btnCreate: "Crear Canción (-1 Crédito)",
-            consoleTitle: "Salida del Estudio en Vivo",
-            readyMsg: "Escribe tu idea y haz clic en Crear Canción.",
-            downloadAudio: "MP3 Audio",
-            downloadVideo: "MP4 Video",
-            license: "100% Licencia Comercial Libre de Derechos Incluida"
-        },
-        ar: {
-            headerDesc: "استوديو الذكاء الاصطناعي العالمي للموسيقى والفيديوهات الفيروسية",
-            creditsText: "الرصيد",
-            upgradeText: "احصل على غير محدود",
-            titleInput: "اكتب فكرة أغنيتك",
-            placeholder: "مثال: لحن هادئ في ليلة ممطرة...",
-            songLang: "لغة الأغنية:",
-            targetRegion: "🎯 الدولة والمنصة المستهدفة:",
-            genreLbl: "النوع الموسيقي:",
-            genreSearchPlaceholder: "🔍 ابحث عن نوع...",
-            btnCreate: "إنشاء الأغنية (-1 رصيد)",
-            consoleTitle: "مخرجات الاستوديو المباشر",
-            readyMsg: "أدخل فكرتك واضغط على إنشاء الأغنية.",
-            downloadAudio: "تحميل MP3",
-            downloadVideo: "تحميل MP4",
-            license: "ترخيص تجاري كامل بدون حقوق ملكية"
+            license: "100% कमर्शियल कॉपीराइट फ्री लाइसेंस शामिल",
+            about: "हमारे बारे में",
+            contact: "संपर्क करें",
+            terms: "सेवा की शर्तें",
+            privacy: "गोपनीयता नीति",
+            refund: "रिफंड नीति"
         }
     };
 
@@ -147,7 +127,6 @@
         if (creditBalanceEl) creditBalanceEl.innerText = userCredits;
     }
 
-    // ১. languages.json থেকে বিশ্বের সব ভাষা লোড
     async function loadLanguages() {
         let langs = fallbackLanguages;
         try {
@@ -156,9 +135,7 @@
                 const data = await res.json();
                 if (Array.isArray(data) && data.length > 0) langs = data;
             }
-        } catch (e) {
-            console.warn("languages.json লোড হতে সমস্যা, ফলব্যাক ব্যবহৃত হচ্ছে।");
-        }
+        } catch (e) {}
 
         if (siteLangSelect) siteLangSelect.innerHTML = "";
         if (songLangSelect) songLangSelect.innerHTML = "";
@@ -173,20 +150,16 @@
         if (songLangSelect) songLangSelect.value = currentLang;
     }
 
-    // ২. genres.json থেকে সম্পূর্ণ জঁরা লোড
     async function loadGenres() {
         try {
             const res = await fetch("/genres.json");
             if (res.ok) {
                 allCategories = await res.json();
             }
-        } catch (e) {
-            console.warn("genres.json লোড হতে সমস্যা।");
-        }
+        } catch (e) {}
         renderGenres(allCategories, "");
     }
 
-    // ৩. ওয়েবসাইটের ভাষা প্রয়োগ
     function applyLanguage(lang) {
         currentLang = lang;
         localStorage.setItem("selected_site_lang", lang);
@@ -208,11 +181,23 @@
         if (document.getElementById("btnDownloadVideoText")) document.getElementById("btnDownloadVideoText").innerText = t.downloadVideo;
         if (document.getElementById("lblLicenseNotice")) document.getElementById("lblLicenseNotice").innerText = t.license;
 
+        // ফুটার অনুবাদ
+        const fAbout = document.querySelector("footer a[href=\x27/about\x27]");
+        const fContact = document.querySelector("footer a[href=\x27/contact\x27]");
+        const fTerms = document.querySelector("footer a[href=\x27/terms\x27]");
+        const fPrivacy = document.querySelector("footer a[href=\x27/privacy\x27]");
+        const fRefund = document.querySelector("footer a[href=\x27/refund\x27]");
+
+        if (fAbout && t.about) fAbout.innerText = t.about;
+        if (fContact && t.contact) fContact.innerText = t.contact;
+        if (fTerms && t.terms) fTerms.innerText = t.terms;
+        if (fPrivacy && t.privacy) fPrivacy.innerText = t.privacy;
+        if (fRefund && t.refund) fRefund.innerText = t.refund;
+
         renderGenres(allCategories, genreSearch ? genreSearch.value.trim() : "");
         if (window.lucide) { lucide.createIcons(); }
     }
 
-    // ৪. জঁরা সার্চ ও ফিল্টারিং
     function renderGenres(categories, filterText = "") {
         if (!genreSelect) return;
         genreSelect.innerHTML = "";
@@ -286,7 +271,6 @@
         });
     }
 
-    // My Creations রেন্ডার
     function renderCreations() {
         if (topCreationsCount) topCreationsCount.innerText = savedCreations.length;
         if (!modalCreationsGrid) return;
@@ -346,7 +330,7 @@
         b.addEventListener("click", () => {
             const added = parseInt(b.dataset.credits);
             updateCredits(userCredits + added);
-            alert(`🎉 পেমেন্ট সফল! ${added} টি ক্রেডিট অ্যাকাউন্টে যুক্ত হয়েছে।`);
+            alert(`🎉 পেমেন্ট সফল! ${added} টি ক্রেডিট অ্যাকাউন্টে যুক্ত হয়েছে।`);
             if (pricingModal) pricingModal.classList.add("hidden");
         });
     });
@@ -354,7 +338,6 @@
     updateCredits(userCredits);
     renderCreations();
 
-    // মিউজিক ভিজ্যুয়ালাইজার ও রেকর্ডার
     function startVisualizerAndRecorder() {
         if (!canvas) return;
         canvas.width = canvas.parentElement.clientWidth || 360;
@@ -413,7 +396,6 @@
         draw();
     }
 
-    // গান তৈরি
     if (btn) {
         btn.addEventListener("click", async () => {
             if (userCredits <= 0) {
@@ -455,7 +437,7 @@
                 });
                 const audData = await audRes.json();
 
-                if (statusBox) statusBox.innerText += `[৩/৩] সোশ্যাল মিডিয়ার ভাইরাল MP4 ভিডিও ফ্রেম তৈরি সম্পন্ন হচ্ছে...\n`;
+                if (statusBox) statusBox.innerText += `[৩/৩] সোশ্যাল মিডিয়ার ভাইরাল MP4 ভিডিও ফ্রেম তৈরি সম্পন্ন হচ্ছে...\n`;
                 await fetch("/api/generate-video", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
@@ -476,7 +458,6 @@
                         badgeStatus.className = "text-[10px] bg-emerald-950 text-emerald-400 px-2 py-0.5 rounded font-mono";
                     }
 
-                    // My Creations-এ সংরক্ষণ
                     savedCreations.unshift({
                         title: text.slice(0, 30),
                         genre: genre,
@@ -492,7 +473,7 @@
                     if (audioPlayer) audioPlayer.play().catch(() => {});
                 }
             } catch(err) {
-                if (statusBox) statusBox.innerText += "\nগান তৈরি করতে সমস্যা হয়েছে। পুনরায় চেষ্টা করুন।";
+                if (statusBox) statusBox.innerText += "\nগান তৈরি করতে সমস্যা হয়েছে। পুনরায় চেষ্টা করুন।";
                 if (badgeStatus) badgeStatus.innerText = "FAILED";
             } finally {
                 btn.disabled = false;
