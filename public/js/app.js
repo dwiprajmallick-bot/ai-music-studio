@@ -55,13 +55,60 @@
         }
     };
 
+    let currentUser = JSON.parse(localStorage.getItem("melody_user") || "null");
     let userCredits = parseInt(localStorage.getItem("melody_credits") || "10");
     const creditBalanceEl = document.getElementById("creditBalance");
+    const btnGoogleLogin = document.getElementById("btnGoogleLogin");
+    const userBadge = document.getElementById("userBadge");
+    const userAvatar = document.getElementById("userAvatar");
+    const userName = document.getElementById("userName");
+
     function updateCredits(count) {
         userCredits = count;
         localStorage.setItem("melody_credits", userCredits);
         creditBalanceEl.innerText = userCredits;
     }
+
+    function renderUser() {
+        if (currentUser) {
+            btnGoogleLogin.classList.add("hidden");
+            userBadge.classList.remove("hidden");
+            userAvatar.src = currentUser.picture;
+            userName.innerText = currentUser.name;
+            if (currentUser.credits !== undefined) updateCredits(currentUser.credits);
+        } else {
+            btnGoogleLogin.classList.remove("hidden");
+            userBadge.classList.add("hidden");
+        }
+    }
+
+    btnGoogleLogin.addEventListener("click", async () => {
+        const dummyEmail = prompt("লগইনের জন্য আপনার ইমেইল দিন (বা সরাসরি Ok চাপুন):", "creator@gmail.com");
+        if (!dummyEmail) return;
+
+        try {
+            const res = await fetch("/api/auth/google", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    email: dummyEmail,
+                    name: dummyEmail.split("@")[0],
+                    picture: `https://api.dicebear.com/7.x/bottts/svg?seed=${dummyEmail}`
+                })
+            });
+            const data = await res.json();
+            if (data.success) {
+                currentUser = data.user;
+                localStorage.setItem("melody_user", JSON.stringify(currentUser));
+                renderUser();
+                alert(`স্বাগতম ${currentUser.name}! আপনার অ্যাকাউন্টে ${currentUser.credits} টি ক্রেডিট যোগ হয়েছে।`);
+            }
+        } catch(e) {
+            alert("লগইন সম্পন্ন হতে সমস্যা হয়েছে।");
+        }
+    });
+
+    renderUser();
     updateCredits(userCredits);
 
     const siteLangSelect = document.getElementById("siteLangSelect");
@@ -89,16 +136,40 @@
     let mediaRecorder = null;
     let recordedChunks = [];
 
+    // Pricing & Instant Payment Checkout
     const pricingModal = document.getElementById("pricingModal");
     document.getElementById("btnPricing").addEventListener("click", () => pricingModal.classList.remove("hidden"));
     document.getElementById("btnCloseModal").addEventListener("click", () => pricingModal.classList.add("hidden"));
 
     document.querySelectorAll(".buy-plan-btn").forEach(b => {
-        b.addEventListener("click", () => {
+        b.addEventListener("click", async () => {
             const added = parseInt(b.dataset.credits);
-            updateCredits(userCredits + added);
-            alert(`🎉 Success! Added ${added} credits.`);
-            pricingModal.classList.add("hidden");
+            const amount = added === 50 ? 4.99 : 14.99;
+            
+            try {
+                const res = await fetch("/api/payment/create-order", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ amount, credits: added })
+                });
+                const orderData = await res.json();
+
+                if (orderData.success) {
+                    const confirmPay = confirm(`💳 পেমেন্ট গেটওয়ে (${orderData.currency} $${amount})\n\nআপনি কি ${added} টি ক্রেডিট কিনতে চান? (UPI / Card Ready)`);
+                    if (confirmPay) {
+                        await fetch("/api/payment/verify-payment", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({ orderId: orderData.orderId, paymentStatus: "PAID" })
+                        });
+                        updateCredits(userCredits + added);
+                        alert(`🎉 পেমেন্ট সফল! আপনার অ্যাকাউন্টে ${added} টি ক্রেডিট যোগ করা হয়েছে।`);
+                        pricingModal.classList.add("hidden");
+                    }
+                }
+            } catch (err) {
+                alert("পেমেন্ট গেটওয়ে প্রসেস করতে ব্যর্থ হয়েছে।");
+            }
         });
     });
 
@@ -187,7 +258,6 @@
     genreSearch.addEventListener("input", (e) => renderGenres(allCategories, e.target.value.trim()));
     applyLanguage("bn");
 
-    // Audio Visualizer & Video Stream Capture
     function startVisualizerAndRecorder() {
         canvas.width = canvas.parentElement.clientWidth || 360;
         canvas.height = canvas.parentElement.clientHeight || 480;
@@ -195,7 +265,6 @@
         try {
             const canvasStream = canvas.captureStream(30);
             recordedChunks = [];
-            
             const mimeType = MediaRecorder.isTypeSupported("video/mp4") ? "video/mp4" : "video/webm";
             mediaRecorder = new MediaRecorder(canvasStream, { mimeType });
 
@@ -216,7 +285,7 @@
                 }
             }, 6000);
         } catch (e) {
-            console.log("Recorder initialized:", e);
+            console.log("Recorder:", e);
         }
 
         function draw() {
@@ -276,7 +345,7 @@
             });
             const lyrData = await lyrRes.json();
 
-            statusBox.innerText += `[২/৩] স্টুডিও কোয়ালিটি হারমোনিক্স এবং অডিও প্রসেস হচ্ছে...\n`;
+            statusBox.innerText += `[২/৩] স্টুডিও কোয়ালিটি হারমোনিক্স এবং অডিও প্রসেস হচ্ছে...\n`;
 
             const audRes = await fetch("/api/generate-audio", {
                 method: "POST",
@@ -285,7 +354,7 @@
             });
             const audData = await audRes.json();
 
-            statusBox.innerText += `[৩/৩] সোশ্যাল মিডিয়ার ভাইরাল MP4 ভিডিও ফ্রেম এনকোড সম্পন্ন হচ্ছে...\n`;
+            statusBox.innerText += `[৩/৩] সোশ্যাল মিডিয়ার ভাইরাল MP4 ভিডিও ফ্রেম এনকোড সম্পন্ন হচ্ছে...\n`;
             await fetch("/api/generate-video", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
