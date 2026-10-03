@@ -1,8 +1,113 @@
 ﻿document.addEventListener("DOMContentLoaded", async () => {
     if (window.lucide) { lucide.createIcons(); }
 
+    // অনুবাদ ডিকশনারি
+    const translations = {
+        bn: {
+            headerDesc: "বিশ্বমানের সম্পূর্ণ স্বয়ংক্রিয় এআই মিউজিক ও সোশ্যাল ভিডিও প্ল্যাটফর্ম",
+            creditsText: "ক্রেডিট অবশিষ্ট",
+            upgradeText: "আনলিমিটেড নিন",
+            titleInput: "আপনার গানের ভাবনা লিখুন",
+            placeholder: "যেমন: বর্ষার রাতে নদীর পাড়ে দাঁড়িয়ে ফেলে আসা স্মৃতির বাঁশির সুর...",
+            songLang: "গানের ভাষা:",
+            targetRegion: "🎯 টার্গেট দেশ ও সোশ্যাল মিডিয়া:",
+            genreLbl: "সুর ও জনরা (Genres):",
+            genreSearchPlaceholder: "🔍 জনরা খুঁজুন (বাউল, Rock, Lo-Fi, Classical)...",
+            btnCreate: "সম্পূর্ণ গান তৈরি করুন (-১ ক্রেডিট)",
+            consoleTitle: "লাইভ স্টুডিও আউটপুট",
+            readyMsg: "ভাবনা লিখুন এবং গান তৈরি করুন বাটনে চাপ দিন।",
+            downloadAudio: "MP3 অডিও",
+            downloadVideo: "MP4 ভিডিও",
+            license: "১০০% বাণিজ্যিক ও কপিরাইট মুক্ত লাইসেন্স অন্তর্ভুক্ত"
+        },
+        en: {
+            headerDesc: "Universal AI Music & Country-Targeted Viral Studio",
+            creditsText: "Credits",
+            upgradeText: "Get Unlimited",
+            titleInput: "Write Your Song Concept",
+            placeholder: "e.g. A peaceful acoustic melody under the rainy night...",
+            songLang: "Song Language:",
+            targetRegion: "🎯 Target Country & Dominant Social Media:",
+            genreLbl: "Musical Tradition / Genre:",
+            genreSearchPlaceholder: "🔍 Search Genre (e.g. Baul, Rock, Lo-Fi)...",
+            btnCreate: "Generate Track (-1 Credit)",
+            consoleTitle: "Live Studio Output",
+            readyMsg: "Enter your prompt and click Generate Track to begin.",
+            downloadAudio: "MP3",
+            downloadVideo: "MP4 Video",
+            license: "100% Commercial Copyright Free Certificate Included"
+        },
+        hi: {
+            headerDesc: "विश्वस्तरीय स्वचालित एआई संगीत एवं सोशल मीडिया वीडियो स्टूडियो",
+            creditsText: "क्रेडिट शेष",
+            upgradeText: "अनलिमिटेड लें",
+            titleInput: "अपनी सोच लिखें",
+            placeholder: "उदा: चांदनी रात में खोई हुई यादों का एक शांत अकॉस्टिक गीत...",
+            songLang: "गीत की भाषा:",
+            targetRegion: "🎯 लक्षित देश और सोशल मीडिया:",
+            genreLbl: "संगीत शैली (Genre):",
+            genreSearchPlaceholder: "🔍 शैली खोजें...",
+            btnCreate: "गीत बनाएं (-1 क्रेडिट)",
+            consoleTitle: "लाइव स्टूडियो आउटपुट",
+            readyMsg: "विचार लिखें और गीत बनाएं बटन दबाएं।",
+            downloadAudio: "MP3 ऑडियो",
+            downloadVideo: "MP4 वीडियो",
+            license: "100% कमर्शियल कॉपीराइट फ्री लाइसेंस शामिल"
+        },
+        es: {
+            headerDesc: "Estudio Universal de Música IA y Videos Virales",
+            creditsText: "Créditos",
+            upgradeText: "Obtener Ilimitado",
+            titleInput: "Escribe el concepto de tu canción",
+            placeholder: "ej. Una melodía acústica bajo una noche lluviosa...",
+            songLang: "Idioma de la canción:",
+            targetRegion: "🎯 País y Redes Sociales:",
+            genreLbl: "Género Musical:",
+            genreSearchPlaceholder: "🔍 Buscar género...",
+            btnCreate: "Crear Canción (-1 Crédito)",
+            consoleTitle: "Salida del Estudio en Vivo",
+            readyMsg: "Escribe tu idea y haz clic en Crear Canción.",
+            downloadAudio: "MP3 Audio",
+            downloadVideo: "MP4 Video",
+            license: "100% Licencia Comercial Libre de Derechos Incluida"
+        },
+        ar: {
+            headerDesc: "استوديو الذكاء الاصطناعي العالمي للموسيقى والفيديوهات الفيروسية",
+            creditsText: "الرصيد",
+            upgradeText: "احصل على غير محدود",
+            titleInput: "اكتب فكرة أغنيتك",
+            placeholder: "مثال: لحن هادئ في ليلة ممطرة...",
+            songLang: "لغة الأغنية:",
+            targetRegion: "🎯 الدولة والمنصة المستهدفة:",
+            genreLbl: "النوع الموسيقي:",
+            genreSearchPlaceholder: "🔍 ابحث عن نوع...",
+            btnCreate: "إنشاء الأغنية (-1 رصيد)",
+            consoleTitle: "مخرجات الاستوديو المباشر",
+            readyMsg: "أدخل فكرتك واضغط على إنشاء الأغنية.",
+            downloadAudio: "تحميل MP3",
+            downloadVideo: "تحميل MP4",
+            license: "ترخيص تجاري كامل بدون حقوق ملكية"
+        }
+    };
+
+    const fallbackLanguages = [
+        { code: "bn", name: "বাংলা (Bengali)", flag: "🇧🇩" },
+        { code: "en", name: "English (Universal)", flag: "🌐" },
+        { code: "hi", name: "हिन्दी (Hindi)", flag: "🇮🇳" },
+        { code: "es", name: "Español (Spanish)", flag: "🇪🇸" },
+        { code: "ar", name: "العربية (Arabic)", flag: "🇸🇦" },
+        { code: "fr", name: "Français (French)", flag: "🇫🇷" },
+        { code: "de", name: "Deutsch (German)", flag: "🇩🇪" },
+        { code: "pt", name: "Português (Portuguese)", flag: "🇧🇷" },
+        { code: "ru", name: "Русский (Russian)", flag: "🇷🇺" },
+        { code: "ja", name: "日本語 (Japanese)", flag: "🇯🇵" },
+        { code: "zh", name: "中文 (Chinese)", flag: "🇨🇳" }
+    ];
+
     let userCredits = parseInt(localStorage.getItem("melody_credits") || "10");
     let savedCreations = JSON.parse(localStorage.getItem("melody_creations") || "[]");
+    let currentLang = localStorage.getItem("selected_site_lang") || "bn";
+    let allCategories = [];
 
     const creditBalanceEl = document.getElementById("creditBalance");
     const topCreationsCount = document.getElementById("topCreationsCount");
@@ -11,44 +116,181 @@
     const btnOpenCreations = document.getElementById("btnOpenCreations");
     const btnCloseCreations = document.getElementById("btnCloseCreations");
 
+    const siteLangSelect = document.getElementById("siteLangSelect");
+    const songLangSelect = document.getElementById("songLangSelect");
+    const countryTargetSelect = document.getElementById("countryTargetSelect");
+    const btn = document.getElementById("submitBtn");
+    const input = document.getElementById("promptInput");
+    const genreSelect = document.getElementById("genreSelect");
+    const genreSearch = document.getElementById("genreSearch");
+    const genreCount = document.getElementById("genreCount");
+    const statusBox = document.getElementById("statusBox");
+    const badgeStatus = document.getElementById("badgeStatus");
+    const playerSection = document.getElementById("playerSection");
+    const audioPlayer = document.getElementById("audioPlayer");
+    const downloadAudioLink = document.getElementById("downloadAudioLink");
+    const downloadVideoLink = document.getElementById("downloadVideoLink");
+    const trackTitle = document.getElementById("trackTitle");
+    const trackMeta = document.getElementById("trackMeta");
+    const licenseCode = document.getElementById("licenseCode");
+    const canvas = document.getElementById("visualCanvas");
+    const ctx = canvas ? canvas.getContext("2d") : null;
+    const videoContainer = document.getElementById("videoContainer");
+    const badgeAspect = document.getElementById("badgeAspect");
+
+    let mediaRecorder = null;
+    let recordedChunks = [];
+
     function updateCredits(count) {
         userCredits = count;
         localStorage.setItem("melody_credits", userCredits);
-        creditBalanceEl.innerText = userCredits;
+        if (creditBalanceEl) creditBalanceEl.innerText = userCredits;
     }
 
-    // লাইভ এডমিন কনটেন্ট ও প্রাইসিং ফেচিং
+    // ১. languages.json থেকে বিশ্বের সব ভাষা লোড
+    async function loadLanguages() {
+        let langs = fallbackLanguages;
+        try {
+            const res = await fetch("/languages.json");
+            if (res.ok) {
+                const data = await res.json();
+                if (Array.isArray(data) && data.length > 0) langs = data;
+            }
+        } catch (e) {
+            console.warn("languages.json লোড হতে সমস্যা, ফলব্যাক ব্যবহৃত হচ্ছে।");
+        }
+
+        if (siteLangSelect) siteLangSelect.innerHTML = "";
+        if (songLangSelect) songLangSelect.innerHTML = "";
+
+        langs.forEach(l => {
+            const label = `${l.flag || "🌐"} ${l.name}`;
+            if (siteLangSelect) siteLangSelect.appendChild(new Option(label, l.code));
+            if (songLangSelect) songLangSelect.appendChild(new Option(label, l.code));
+        });
+
+        if (siteLangSelect) siteLangSelect.value = currentLang;
+        if (songLangSelect) songLangSelect.value = currentLang;
+    }
+
+    // ২. genres.json থেকে সম্পূর্ণ জঁরা লোড
+    async function loadGenres() {
+        try {
+            const res = await fetch("/genres.json");
+            if (res.ok) {
+                allCategories = await res.json();
+            }
+        } catch (e) {
+            console.warn("genres.json লোড হতে সমস্যা।");
+        }
+        renderGenres(allCategories, "");
+    }
+
+    // ৩. ওয়েবসাইটের ভাষা প্রয়োগ
+    function applyLanguage(lang) {
+        currentLang = lang;
+        localStorage.setItem("selected_site_lang", lang);
+
+        const t = translations[lang] || translations["en"];
+
+        if (document.getElementById("headerDesc")) document.getElementById("headerDesc").innerText = t.headerDesc;
+        if (document.getElementById("lblCredits")) document.getElementById("lblCredits").innerText = t.creditsText;
+        if (document.getElementById("btnUpgradeText")) document.getElementById("btnUpgradeText").innerText = t.upgradeText;
+        if (document.getElementById("titleInputBox")) document.getElementById("titleInputBox").innerHTML = `<i data-lucide="sparkles" class="w-4 h-4 text-indigo-400"></i> ${t.titleInput}`;
+        if (input) input.placeholder = t.placeholder;
+        if (document.getElementById("lblSongLang")) document.getElementById("lblSongLang").innerText = t.songLang;
+        if (document.getElementById("lblTargetRegion")) document.getElementById("lblTargetRegion").innerText = t.targetRegion;
+        if (document.getElementById("lblGenre")) document.getElementById("lblGenre").innerText = t.genreLbl;
+        if (genreSearch) genreSearch.placeholder = t.genreSearchPlaceholder;
+        if (document.getElementById("btnCreateText")) document.getElementById("btnCreateText").innerText = t.btnCreate;
+        if (document.getElementById("titleStudioConsole")) document.getElementById("titleStudioConsole").innerText = t.consoleTitle;
+        if (document.getElementById("btnDownloadText")) document.getElementById("btnDownloadText").innerText = t.downloadAudio;
+        if (document.getElementById("btnDownloadVideoText")) document.getElementById("btnDownloadVideoText").innerText = t.downloadVideo;
+        if (document.getElementById("lblLicenseNotice")) document.getElementById("lblLicenseNotice").innerText = t.license;
+
+        renderGenres(allCategories, genreSearch ? genreSearch.value.trim() : "");
+        if (window.lucide) { lucide.createIcons(); }
+    }
+
+    // ৪. জঁরা সার্চ ও ফিল্টারিং
+    function renderGenres(categories, filterText = "") {
+        if (!genreSelect) return;
+        genreSelect.innerHTML = "";
+        let count = 0;
+
+        categories.forEach(cat => {
+            const catName = (cat.category && (cat.category[currentLang] || cat.category["en"])) || "Music Category";
+            const matched = (cat.genres || []).filter(g => {
+                const name = g[currentLang] || g["en"] || "";
+                return name.toLowerCase().includes(filterText.toLowerCase()) || catName.toLowerCase().includes(filterText.toLowerCase());
+            });
+
+            if (matched.length > 0) {
+                const group = document.createElement("optgroup");
+                group.label = catName;
+                matched.forEach(g => {
+                    const gName = g[currentLang] || g["en"];
+                    group.appendChild(new Option(gName, gName));
+                    count++;
+                });
+                genreSelect.appendChild(group);
+            }
+        });
+
+        if (genreCount) genreCount.innerText = `${count} Genres`;
+    }
+
+    await loadLanguages();
+    await loadGenres();
+    applyLanguage(currentLang);
+
+    if (siteLangSelect) {
+        siteLangSelect.addEventListener("change", (e) => {
+            applyLanguage(e.target.value);
+            if (songLangSelect) songLangSelect.value = e.target.value;
+        });
+    }
+
+    if (genreSearch) {
+        genreSearch.addEventListener("input", (e) => {
+            renderGenres(allCategories, e.target.value.trim());
+        });
+    }
+
     try {
         const setRes = await fetch("/api/admin/site-settings");
         const setData = await setRes.json();
         if (setData.success) {
-            if (setData.settings.bannerNotice) {
+            if (setData.settings.bannerNotice && document.getElementById("liveBanner")) {
                 document.getElementById("liveBanner").innerText = setData.settings.bannerNotice;
             }
-            if (setData.settings.starterPrice) {
+            if (setData.settings.starterPrice && document.getElementById("dispStarterPrice")) {
                 document.getElementById("dispStarterPrice").innerText = `₹${setData.settings.starterPrice}`;
             }
-            if (setData.settings.creatorPrice) {
+            if (setData.settings.creatorPrice && document.getElementById("dispCreatorPrice")) {
                 document.getElementById("dispCreatorPrice").innerText = `₹${setData.settings.creatorPrice}`;
             }
-            const trendingCont = document.getElementById("trendingContainer");
-            if (setData.settings.trendingChips && setData.settings.trendingChips.length > 0) {
-                trendingCont.innerHTML = setData.settings.trendingChips.map(c => `
-                    <button class="trend-chip text-[11px] bg-slate-950 border border-slate-800 px-2.5 py-1 rounded-lg text-slate-300 hover:border-indigo-500 transition" data-text="${c}">
-                        💡 ${c.slice(0, 30)}...
-                    </button>
-                `).join("");
-                document.querySelectorAll(".trend-chip").forEach(chip => {
-                    chip.addEventListener("click", () => {
-                        document.getElementById("promptInput").value = chip.dataset.text;
-                    });
-                });
-            }
         }
-    } catch (e) { console.error(e); }
+    } catch(e) {}
 
+    if (countryTargetSelect) {
+        countryTargetSelect.addEventListener("change", () => {
+            const aspect = countryTargetSelect.options[countryTargetSelect.selectedIndex].dataset.aspect;
+            if (aspect === "9:16") {
+                if (videoContainer) videoContainer.className = "relative rounded-lg overflow-hidden border border-slate-800 max-h-80 aspect-[9/16] bg-black flex items-center justify-center mx-auto transition-all";
+                if (badgeAspect) badgeAspect.innerText = "9:16 Shorts/TikTok Ready";
+            } else {
+                if (videoContainer) videoContainer.className = "relative rounded-lg overflow-hidden border border-slate-800 max-h-72 aspect-video bg-black flex items-center justify-center mx-auto transition-all";
+                if (badgeAspect) badgeAspect.innerText = "16:9 YouTube HD Landscape";
+            }
+        });
+    }
+
+    // My Creations রেন্ডার
     function renderCreations() {
-        topCreationsCount.innerText = savedCreations.length;
+        if (topCreationsCount) topCreationsCount.innerText = savedCreations.length;
+        if (!modalCreationsGrid) return;
+
         if (savedCreations.length === 0) {
             modalCreationsGrid.innerHTML = `
                 <div class="col-span-full py-12 text-center text-slate-500 text-xs">
@@ -80,119 +322,181 @@
         if (window.lucide) { lucide.createIcons(); }
     }
 
-    btnOpenCreations.addEventListener("click", () => {
-        renderCreations();
-        creationsModal.classList.remove("hidden");
-    });
-    btnCloseCreations.addEventListener("click", () => creationsModal.classList.add("hidden"));
+    if (btnOpenCreations) {
+        btnOpenCreations.addEventListener("click", () => {
+            renderCreations();
+            if (creationsModal) creationsModal.classList.remove("hidden");
+        });
+    }
+    if (btnCloseCreations) {
+        btnCloseCreations.addEventListener("click", () => {
+            if (creationsModal) creationsModal.classList.add("hidden");
+        });
+    }
 
     const pricingModal = document.getElementById("pricingModal");
-    document.getElementById("btnPricing").addEventListener("click", () => pricingModal.classList.remove("hidden"));
-    document.getElementById("btnCloseModal").addEventListener("click", () => pricingModal.classList.add("hidden"));
+    if (document.getElementById("btnPricing")) {
+        document.getElementById("btnPricing").addEventListener("click", () => pricingModal && pricingModal.classList.remove("hidden"));
+    }
+    if (document.getElementById("btnCloseModal")) {
+        document.getElementById("btnCloseModal").addEventListener("click", () => pricingModal && pricingModal.classList.add("hidden"));
+    }
 
     document.querySelectorAll(".buy-plan-btn").forEach(b => {
         b.addEventListener("click", () => {
             const added = parseInt(b.dataset.credits);
             updateCredits(userCredits + added);
-            alert(`🎉 পেমেন্ট সফল! ${added} টি ক্রেডিট অ্যাকাউন্টে যুক্ত হয়েছে।`);
-            pricingModal.classList.add("hidden");
+            alert(`🎉 পেমেন্ট সফল! ${added} টি ক্রেডিট অ্যাকাউন্টে যুক্ত হয়েছে।`);
+            if (pricingModal) pricingModal.classList.add("hidden");
         });
     });
 
     updateCredits(userCredits);
     renderCreations();
 
-    // Studio Engine
-    const btn = document.getElementById("submitBtn");
-    const input = document.getElementById("promptInput");
-    const genreSelect = document.getElementById("genreSelect");
-    const songLangSelect = document.getElementById("songLangSelect");
-    const statusBox = document.getElementById("statusBox");
-    const badgeStatus = document.getElementById("badgeStatus");
-    const playerSection = document.getElementById("playerSection");
-    const audioPlayer = document.getElementById("audioPlayer");
-    const downloadAudioLink = document.getElementById("downloadAudioLink");
-    const trackTitle = document.getElementById("trackTitle");
-    const trackMeta = document.getElementById("trackMeta");
-    const licenseCode = document.getElementById("licenseCode");
-    const canvas = document.getElementById("visualCanvas");
-    const ctx = canvas.getContext("2d");
-
-    function startVisualizer() {
+    // মিউজিক ভিজ্যুয়ালাইজার ও রেকর্ডার
+    function startVisualizerAndRecorder() {
+        if (!canvas) return;
         canvas.width = canvas.parentElement.clientWidth || 360;
-        canvas.height = canvas.parentElement.clientHeight || 200;
+        canvas.height = canvas.parentElement.clientHeight || 480;
+
+        try {
+            const canvasStream = canvas.captureStream(30);
+            recordedChunks = [];
+            const mimeType = MediaRecorder.isTypeSupported("video/mp4") ? "video/mp4" : "video/webm";
+            mediaRecorder = new MediaRecorder(canvasStream, { mimeType });
+
+            mediaRecorder.ondataavailable = (e) => {
+                if (e.data.size > 0) recordedChunks.push(e.data);
+            };
+
+            mediaRecorder.onstop = () => {
+                const blob = new Blob(recordedChunks, { type: mimeType });
+                if (downloadVideoLink) {
+                    downloadVideoLink.href = URL.createObjectURL(blob);
+                    downloadVideoLink.download = `melodyai-${Date.now()}.${mimeType === "video/mp4" ? "mp4" : "webm"}`;
+                }
+            };
+
+            mediaRecorder.start();
+            setTimeout(() => {
+                if (mediaRecorder && mediaRecorder.state === "recording") {
+                    mediaRecorder.stop();
+                }
+            }, 6000);
+        } catch(e) {}
+
         function draw() {
             ctx.fillStyle = "rgba(2, 6, 23, 0.25)";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
-            for (let i = 0; i < 30; i++) {
-                const h = Math.random() * (canvas.height * 0.7) + 10;
-                const w = canvas.width / 30;
-                ctx.fillStyle = "#8b5cf6";
-                ctx.fillRect(i * w + 2, (canvas.height - h)/2, w - 4, h);
+
+            const bars = 36;
+            const w = canvas.width / bars;
+
+            for (let i = 0; i < bars; i++) {
+                const h = Math.random() * (canvas.height * 0.75) + 12;
+                const x = i * w;
+                const y = (canvas.height - h) / 2;
+
+                const grad = ctx.createLinearGradient(0, y, 0, y + h);
+                grad.addColorStop(0, "#ec4899");
+                grad.addColorStop(0.5, "#8b5cf6");
+                grad.addColorStop(1, "#3b82f6");
+
+                ctx.fillStyle = grad;
+                ctx.beginPath();
+                ctx.roundRect(x + 2, y, w - 4, h, 4);
+                ctx.fill();
             }
             requestAnimationFrame(draw);
         }
         draw();
     }
 
-    btn.addEventListener("click", async () => {
-        if (userCredits <= 0) {
-            pricingModal.classList.remove("hidden");
-            return alert("আপনার ক্রেডিট শেষ! অনুগ্রহ করে ক্রেডিট রিচার্জ করুন।");
-        }
-        const text = input.value.trim();
-        if (!text) return alert("অনুগ্রহ করে গানের কথা বা ভাবনা লিখুন।");
+    // গান তৈরি
+    if (btn) {
+        btn.addEventListener("click", async () => {
+            if (userCredits <= 0) {
+                if (pricingModal) pricingModal.classList.remove("hidden");
+                return alert("আপনার কোনো ক্রেডিট নেই! অনুগ্রহ করে ক্রেডিট রিচার্জ করুন।");
+            }
 
-        updateCredits(userCredits - 1);
-        btn.disabled = true;
-        badgeStatus.innerText = "GENERATING";
-        playerSection.classList.add("hidden");
-        statusBox.innerText = `[১/২] এআই সুর ও লিরিক্স প্রস্তুত হচ্ছে...\n`;
+            const text = input ? input.value.trim() : "";
+            const genre = genreSelect ? genreSelect.value || "Modern Melody" : "Modern Melody";
+            const targetSongLang = songLangSelect ? songLangSelect.value : "bn";
+            const targetPlatform = countryTargetSelect ? countryTargetSelect.value : "global";
 
-        try {
-            const lyrRes = await fetch("/api/generate-lyrics", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ prompt: text, genre: genreSelect.value, language: songLangSelect.value })
-            });
-            const lyrData = await lyrRes.json();
+            if (!text) return alert("অনুগ্রহ করে আপনার গানের ভাবনাটি লিখুন।");
 
-            statusBox.innerText += `[২/২] অডিও মাস্টার এনকোড সম্পন্ন হচ্ছে...\n`;
-            const audRes = await fetch("/api/generate-audio", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ lyrics: lyrData.lyrics, genre: genreSelect.value, prompt: text })
-            });
-            const audData = await audRes.json();
+            updateCredits(userCredits - 1);
+            btn.disabled = true;
+            if (badgeStatus) {
+                badgeStatus.innerText = "GENERATING";
+                badgeStatus.className = "text-[10px] bg-indigo-950 text-indigo-400 px-2 py-0.5 rounded animate-pulse";
+            }
+            if (playerSection) playerSection.classList.add("hidden");
 
-            statusBox.innerText = `✨ সম্পূর্ণ গান ও লিরিক্স প্রস্তুত:\n\n${lyrData.lyrics}`;
-            trackTitle.innerText = text.slice(0, 24);
-            trackMeta.innerText = `${genreSelect.value} • ${songLangSelect.value.toUpperCase()}`;
-            audioPlayer.src = audData.audioUrl;
-            downloadAudioLink.href = audData.audioUrl;
-            licenseCode.innerText = audData.licenseId;
+            if (statusBox) statusBox.innerText = `[১/৩] এআই সুর ও লিরিক্স তৈরি হচ্ছে (${genre})...\n`;
 
-            playerSection.classList.remove("hidden");
-            badgeStatus.innerText = "READY";
+            try {
+                const lyrRes = await fetch("/api/generate-lyrics", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ prompt: text, genre, language: targetSongLang })
+                });
+                const lyrData = await lyrRes.json();
 
-            savedCreations.unshift({
-                title: text.slice(0, 30),
-                genre: genreSelect.value,
-                lyrics: lyrData.lyrics,
-                audioUrl: audData.audioUrl,
-                licenseId: audData.licenseId,
-                date: new Date().toLocaleDateString()
-            });
-            localStorage.setItem("melody_creations", JSON.stringify(savedCreations));
-            renderCreations();
+                if (statusBox) statusBox.innerText += `[২/৩] অডিও হারমোনিক্স এবং সুর প্রসেস হচ্ছে...\n`;
 
-            startVisualizer();
-            audioPlayer.play().catch(() => {});
-        } catch (e) {
-            statusBox.innerText += "\nত্রুটি হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন।";
-            badgeStatus.innerText = "FAILED";
-        } finally {
-            btn.disabled = false;
-        }
-    });
+                const audRes = await fetch("/api/generate-audio", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ lyrics: lyrData.lyrics, genre, prompt: text })
+                });
+                const audData = await audRes.json();
+
+                if (statusBox) statusBox.innerText += `[৩/৩] সোশ্যাল মিডিয়ার ভাইরাল MP4 ভিডিও ফ্রেম তৈরি সম্পন্ন হচ্ছে...\n`;
+                await fetch("/api/generate-video", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ audioUrl: audData.audioUrl, style: genre, platform: targetPlatform })
+                });
+
+                if (audData.success) {
+                    if (statusBox) statusBox.innerText = `✨ সম্পূর্ণ গান ও লিরিক্স প্রস্তুত:\n\n${lyrData.lyrics}`;
+                    if (trackTitle) trackTitle.innerText = text.slice(0, 24);
+                    if (trackMeta && countryTargetSelect) trackMeta.innerText = `${genre} • সোশ্যাল ফরম্যাট: ${countryTargetSelect.options[countryTargetSelect.selectedIndex].text.slice(0, 20)}...`;
+                    if (audioPlayer) audioPlayer.src = audData.audioUrl;
+                    if (downloadAudioLink) downloadAudioLink.href = audData.audioUrl;
+                    if (licenseCode) licenseCode.innerText = audData.licenseId;
+
+                    if (playerSection) playerSection.classList.remove("hidden");
+                    if (badgeStatus) {
+                        badgeStatus.innerText = "READY";
+                        badgeStatus.className = "text-[10px] bg-emerald-950 text-emerald-400 px-2 py-0.5 rounded font-mono";
+                    }
+
+                    // My Creations-এ সংরক্ষণ
+                    savedCreations.unshift({
+                        title: text.slice(0, 30),
+                        genre: genre,
+                        lyrics: lyrData.lyrics,
+                        audioUrl: audData.audioUrl,
+                        licenseId: audData.licenseId,
+                        date: new Date().toLocaleDateString()
+                    });
+                    localStorage.setItem("melody_creations", JSON.stringify(savedCreations));
+                    renderCreations();
+
+                    startVisualizerAndRecorder();
+                    if (audioPlayer) audioPlayer.play().catch(() => {});
+                }
+            } catch(err) {
+                if (statusBox) statusBox.innerText += "\nগান তৈরি করতে সমস্যা হয়েছে। পুনরায় চেষ্টা করুন।";
+                if (badgeStatus) badgeStatus.innerText = "FAILED";
+            } finally {
+                btn.disabled = false;
+            }
+        });
+    }
 });

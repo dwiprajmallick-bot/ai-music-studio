@@ -9,7 +9,7 @@
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col font-sans selection:bg-indigo-500 selection:text-white">
 
-    <!-- Live Admin Dynamic Banner -->
+    <!-- Dynamic Admin Announcement Banner -->
     <div id="liveBanner" class="bg-gradient-to-r from-indigo-900 via-purple-900 to-pink-900 py-1.5 px-4 text-center text-xs text-indigo-100 font-medium border-b border-indigo-800/40">
         🔥 সীমিত সময়ের জন্য নতুন অ্যাকাউন্ট খুললেই ১০ ফ্রি ক্রেডিট উপহার!
     </div>
@@ -22,16 +22,18 @@
                 </div>
                 <div>
                     <h1 class="text-lg font-bold bg-gradient-to-r from-indigo-400 via-purple-300 to-pink-400 bg-clip-text text-transparent">MelodyAI Global Pro</h1>
-                    <p class="text-[10px] text-slate-400 -mt-1 font-medium">Universal AI Music & Viral Studio</p>
+                    <p class="text-[10px] text-slate-400 -mt-1 font-medium" id="headerDesc">Universal AI Music & Country-Targeted Viral Studio</p>
                 </div>
             </div>
 
             <div class="flex items-center gap-2.5 flex-wrap">
+                <!-- My Creations Button -->
                 <button id="btnOpenCreations" class="bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold px-3 py-1.5 rounded-xl transition flex items-center gap-1.5 border border-slate-700">
                     <i data-lucide="folder-music" class="w-3.5 h-3.5 text-indigo-400"></i>
                     <span>My Creations (<span id="topCreationsCount">0</span>)</span>
                 </button>
 
+                <!-- Customer Account -->
                 <div id="authContainer" class="flex items-center gap-2">
                     <a href="/login" class="bg-white hover:bg-slate-100 text-slate-900 text-xs font-semibold px-3 py-1.5 rounded-xl transition shadow flex items-center gap-1.5">
                         <i data-lucide="user" class="w-3.5 h-3.5"></i>
@@ -39,14 +41,22 @@
                     </a>
                 </div>
 
-                <div class="bg-slate-900 border border-slate-700/80 px-3 py-1.5 rounded-xl flex items-center gap-2">
-                    <i data-lucide="coins" class="w-4 h-4 text-amber-400"></i>
-                    <span class="text-xs text-slate-300 font-medium"><span id="creditBalance" class="text-amber-400 font-bold">10</span> Credits</span>
+                <!-- Wallet Credits -->
+                <div class="bg-slate-900 border border-slate-700/80 px-3 py-1.5 rounded-xl flex items-center gap-2 shadow-inner">
+                    <i data-lucide="coins" class="w-4 h-4 text-amber-400 animate-bounce"></i>
+                    <span class="text-xs text-slate-300 font-medium"><span id="creditBalance" class="text-amber-400 font-bold">10</span> <span id="lblCredits">Credits</span></span>
                 </div>
 
-                <button id="btnPricing" class="bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 text-xs font-bold px-3 py-1.5 rounded-xl transition shadow">
-                    Get Credits
+                <button id="btnPricing" class="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-slate-950 text-xs font-bold px-3.5 py-1.5 rounded-xl transition shadow-md shadow-orange-500/20 flex items-center gap-1.5">
+                    <i data-lucide="zap" class="w-3.5 h-3.5 fill-current"></i> <span id="btnUpgradeText">Get Unlimited</span>
                 </button>
+
+                <!-- বিশ্বব্যাপী সব ভাষা সিলেক্টর (Global Site Language Selector) -->
+                <div class="flex items-center gap-1.5 border-l border-slate-800 pl-3">
+                    <i data-lucide="globe" class="w-4 h-4 text-indigo-400"></i>
+                    <select id="siteLangSelect" class="bg-slate-900 border border-slate-700 text-slate-200 text-xs px-2.5 py-1.5 rounded-xl outline-none focus:border-indigo-500 font-medium cursor-pointer">
+                    </select>
+                </div>
             </div>
         </div>
     </header>
@@ -54,88 +64,100 @@
     <main class="flex-1 max-w-7xl w-full mx-auto p-4 md:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
         <div class="lg:col-span-5 bg-slate-900/80 border border-slate-800 rounded-2xl p-5 flex flex-col justify-between shadow-xl">
             <div class="space-y-4">
-                <h2 class="text-sm font-semibold text-slate-200 flex items-center gap-2">
-                    <i data-lucide="sparkles" class="w-4 h-4 text-indigo-400"></i> গানের ভাবনা লিখুন
-                </h2>
+                <div class="flex items-center justify-between">
+                    <h2 class="text-sm font-semibold text-slate-200 flex items-center gap-2" id="titleInputBox">
+                        <i data-lucide="sparkles" class="w-4 h-4 text-indigo-400"></i> Write Your Song Concept
+                    </h2>
+                    <span class="text-[10px] text-pink-400 bg-pink-950/60 border border-pink-800/60 px-2 py-0.5 rounded-full font-mono">Trending Ideas 🔥</span>
+                </div>
 
-                <!-- Live Trending Chips Container -->
+                <!-- Trending Suggestion Chips -->
                 <div id="trendingContainer" class="flex flex-wrap gap-1.5">
+                    <button class="trend-chip text-[11px] bg-slate-950 hover:bg-indigo-950/70 border border-slate-800 hover:border-indigo-500 px-2.5 py-1 rounded-lg text-slate-300 transition" data-text="A soulful acoustic love melody walking under the rainy streetlights">🌧️ Rainy Love Ballad</button>
+                    <button class="trend-chip text-[11px] bg-slate-950 hover:bg-indigo-950/70 border border-slate-800 hover:border-indigo-500 px-2.5 py-1 rounded-lg text-slate-300 transition" data-text="High-energy EDM drop with futuristic synthesizer bass">⚡ Cyberpunk Beat</button>
+                    <button class="trend-chip text-[11px] bg-slate-950 hover:bg-indigo-950/70 border border-slate-800 hover:border-indigo-500 px-2.5 py-1 rounded-lg text-slate-300 transition" data-text="Relaxing chill Lo-Fi beats for deep late night study sessions">☕ Late Night Lo-Fi</button>
                 </div>
 
-                <textarea id="promptInput" rows="3" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm focus:border-indigo-500 outline-none text-white resize-none" placeholder="যেমন: বর্ষার রাতে নদীর পাড়ে স্মৃতির বাঁশির সুর..."></textarea>
+                <textarea id="promptInput" rows="3" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm focus:border-indigo-500 outline-none text-white placeholder:text-slate-600 resize-none transition" placeholder="e.g. A peaceful acoustic melody under the stars..."></textarea>
                 
-                <div class="grid grid-cols-2 gap-3">
-                    <div>
-                        <label class="block text-xs font-medium text-slate-400 mb-1">ভাষা:</label>
-                        <select id="songLangSelect" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2 text-xs text-white">
-                            <option value="bn">বাংলা (Bengali)</option>
-                            <option value="hi">हिन्दी (Hindi)</option>
-                            <option value="en">English (Universal)</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-medium text-slate-400 mb-1">সোশ্যাল ফরম্যাট:</label>
-                        <select id="countryTargetSelect" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2 text-xs text-white">
-                            <option value="global" data-aspect="9:16">📱 Shorts / TikTok (9:16)</option>
-                            <option value="yt_long" data-aspect="16:9">📺 YouTube HD (16:9)</option>
-                        </select>
-                    </div>
+                <div>
+                    <label class="block text-xs font-medium text-slate-400 mb-1" id="lblSongLang">Song Language:</label>
+                    <select id="songLangSelect" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-slate-200 focus:border-indigo-500 outline-none">
+                    </select>
                 </div>
 
-                <div>
-                    <label class="block text-xs font-medium text-slate-400 mb-1">জনরা / সুর:</label>
-                    <select id="genreSelect" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-white">
-                        <option value="Modern Acoustic Melody">Modern Acoustic Melody</option>
-                        <option value="Bengali Baul & Folk">Bengali Baul & Folk</option>
-                        <option value="Bollywood Lofi Beat">Bollywood Lofi Beat</option>
-                        <option value="Cinematic Rock">Cinematic Rock</option>
+                <!-- টার্গেট দেশ ও সোশ্যাল মিডিয়া ফরম্যাট -->
+                <div class="p-3 bg-slate-950/60 border border-slate-800 rounded-xl space-y-2">
+                    <label class="block text-xs font-semibold text-indigo-400" id="lblTargetRegion">🎯 Target Country & Dominant Social Media:</label>
+                    <select id="countryTargetSelect" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-xs text-slate-200 focus:border-indigo-500 outline-none">
+                        <option value="global" data-aspect="9:16">🌍 Global Universal (TikTok / Instagram Reels / YouTube Shorts)</option>
+                        <option value="us_eu" data-aspect="9:16">🇺🇸 USA & 🇪🇺 Europe (TikTok & IG Reels - 9:16 Vertical Viral)</option>
+                        <option value="in" data-aspect="9:16">🇮🇳 India & South Asia (YouTube Shorts & Instagram Reels)</option>
+                        <option value="cn" data-aspect="9:16">🇨🇳 China (Douyin / 抖音 & Bilibili Viral Sync)</option>
+                        <option value="jp" data-aspect="16:9">🇯🇵 Japan (X / Twitter & YouTube HD - 16:9)</option>
+                        <option value="br_latam" data-aspect="9:16">🇧🇷 Brazil & Latin America (Kwai & TikTok Status)</option>
+                        <option value="yt_long" data-aspect="16:9">📺 YouTube Full Screen Long Form Video (16:9)</option>
+                    </select>
+                </div>
+
+                <!-- মিউজিক জনরা সার্চ ও ড্রপডাউন -->
+                <div class="space-y-1.5">
+                    <div class="flex items-center justify-between">
+                        <label class="block text-xs font-medium text-slate-400" id="lblGenre">Musical Tradition / Genre:</label>
+                        <span id="genreCount" class="text-[10px] text-indigo-400 font-mono">Loading...</span>
+                    </div>
+                    
+                    <input type="text" id="genreSearch" placeholder="🔍 Search Genre (e.g. Baul, Rock, Lo-Fi, Classical)..." class="w-full bg-slate-950/70 border border-slate-800 rounded-lg px-3 py-1.5 text-xs text-slate-300 focus:border-indigo-500 outline-none placeholder:text-slate-600">
+
+                    <select id="genreSelect" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-slate-200 focus:border-indigo-500 outline-none max-h-48">
                     </select>
                 </div>
             </div>
 
-            <button id="submitBtn" class="mt-6 w-full py-3 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white rounded-xl text-sm font-semibold transition flex items-center justify-center gap-2 shadow-lg shadow-indigo-600/30">
-                <i data-lucide="play" class="w-4 h-4 fill-white"></i> <span>গান তৈরি করুন (-১ ক্রেডিট)</span>
+            <button id="submitBtn" class="mt-6 w-full py-3 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 hover:from-indigo-500 hover:to-pink-500 text-white rounded-xl text-sm font-semibold transition shadow-lg shadow-indigo-600/30 flex items-center justify-center gap-2">
+                <i data-lucide="play" class="w-4 h-4 fill-white"></i> <span id="btnCreateText">Generate Track (-1 Credit)</span>
             </button>
         </div>
 
         <div class="lg:col-span-7 bg-slate-900/80 border border-slate-800 rounded-2xl p-5 flex flex-col justify-between shadow-xl">
             <div>
                 <div class="flex items-center justify-between pb-3 border-b border-slate-800 mb-3">
-                    <h2 class="text-sm font-semibold text-slate-200">লাইভ স্টুডিও প্লেয়ার</h2>
+                    <h2 class="text-sm font-semibold text-slate-200" id="titleStudioConsole">Live Studio Output</h2>
                     <span id="badgeStatus" class="text-[10px] bg-slate-800 text-slate-400 px-2 py-0.5 rounded font-mono">STANDBY</span>
                 </div>
 
-                <div id="statusBox" class="text-xs font-mono text-slate-400 bg-slate-950 p-4 rounded-xl h-28 overflow-y-auto whitespace-pre-line border border-slate-800 mb-4">
-                    গানের ভাবনা লিখুন এবং গান তৈরি করুন বাটনে চাপ দিন।
+                <div id="statusBox" class="text-xs font-mono text-slate-400 bg-slate-950 p-4 rounded-xl h-28 overflow-y-auto whitespace-pre-line border border-slate-800/80 mb-4">
+                    Enter your song prompt and click "Generate Track" to begin.
                 </div>
 
                 <div id="playerSection" class="bg-slate-950 p-4 rounded-xl border border-indigo-900/40 hidden space-y-3">
                     <div class="flex flex-wrap items-center justify-between gap-2">
                         <div>
-                            <h4 id="trackTitle" class="text-xs font-semibold text-white">My Track</h4>
-                            <p id="trackMeta" class="text-[10px] text-slate-400">Viral Master</p>
+                            <h4 id="trackTitle" class="text-xs font-semibold text-white">Universal AI Track</h4>
+                            <p id="trackMeta" class="text-[10px] text-slate-400">Target Social: Shorts / TikTok</p>
                         </div>
                         <div class="flex items-center gap-2">
-                            <a id="downloadAudioLink" href="#" download="melodyai.mp3" class="text-xs bg-indigo-600 text-white px-3 py-1.5 rounded-lg flex items-center gap-1.5">
-                                <i data-lucide="download" class="w-3.5 h-3.5"></i> MP3
+                            <a id="downloadAudioLink" href="#" download="melodyai-track.mp3" class="text-xs bg-indigo-600 hover:bg-indigo-500 text-white px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition">
+                                <i data-lucide="download" class="w-3.5 h-3.5"></i> <span id="btnDownloadText">MP3</span>
                             </a>
-                            <a id="downloadVideoLink" href="#" download="melodyai.mp4" class="text-xs bg-pink-600 text-white px-3 py-1.5 rounded-lg flex items-center gap-1.5">
-                                <i data-lucide="video" class="w-3.5 h-3.5"></i> MP4 Video
+                            <a id="downloadVideoLink" href="#" download="melodyai-viral-video.mp4" class="text-xs bg-pink-600 hover:bg-pink-500 text-white px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition cursor-pointer">
+                                <i data-lucide="video" class="w-3.5 h-3.5"></i> <span id="btnDownloadVideoText">MP4 Video</span>
                             </a>
                         </div>
                     </div>
                     
                     <audio id="audioPlayer" controls class="w-full h-8"></audio>
 
-                    <div id="videoContainer" class="relative rounded-lg overflow-hidden border border-slate-800 max-h-72 aspect-video bg-black flex items-center justify-center mx-auto">
+                    <div id="videoContainer" class="relative rounded-lg overflow-hidden border border-slate-800 max-h-72 aspect-video bg-black flex items-center justify-center mx-auto transition-all duration-300">
                         <canvas id="visualCanvas" class="w-full h-full object-cover"></canvas>
+                        <span id="badgeAspect" class="absolute top-2 right-2 text-[10px] bg-slate-900/90 text-slate-300 px-2 py-0.5 rounded border border-slate-700">9:16 Viral Mode</span>
                     </div>
                 </div>
             </div>
 
-            <div class="flex items-center justify-between border-t border-slate-800 pt-3 mt-4 text-[11px]">
+            <div class="flex items-center justify-between border-t border-slate-800/80 pt-3 mt-4 text-[11px]">
                 <span class="text-emerald-400 flex items-center gap-1 font-medium">
-                    <i data-lucide="shield-check" class="w-3.5 h-3.5"></i> ১০০% কমার্শিয়াল ও কপিরাইট মুক্ত মাস্টার
+                    <i data-lucide="shield-check" class="w-3.5 h-3.5"></i> <span id="lblLicenseNotice">100% Commercial Copyright Free Certificate Included</span>
                 </span>
                 <span id="licenseCode" class="text-slate-500 font-mono">LIC-GLOBAL</span>
             </div>
