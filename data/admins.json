@@ -1,0 +1,9 @@
+{
+  "admin@melodyai.pro": {
+    "email": "admin@melodyai.pro",
+    "salt": "8e13b55fa16d4cdb7eefe6d07b0865ec",
+    "hash": "474b5bad7195596efa26c99d2a104696844d02c725c6afbc375a4ef4526598108a5b4cebb96aaf7dafd295ad21c5d3ad81bc7a30d71119ecba4e973e8a794bc6",
+    "role": "SUPER_ADMIN",
+    "twoFactorSecret": "MELODY_SECURE_KEY_2026"
+  }
+}

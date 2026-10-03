@@ -22,26 +22,19 @@
             </div>
 
             <div class="flex items-center gap-2.5 flex-wrap">
-                <!-- My Creations Direct Button -->
+                <!-- My Creations Button -->
                 <button id="btnOpenCreations" class="bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold px-3 py-1.5 rounded-xl transition flex items-center gap-1.5 border border-slate-700">
                     <i data-lucide="folder-music" class="w-3.5 h-3.5 text-indigo-400"></i>
                     <span>My Creations (<span id="topCreationsCount">0</span>)</span>
                 </button>
 
-                <!-- Admin Link -->
-                <a href="/admin" class="bg-amber-950/80 border border-amber-700/60 hover:bg-amber-900 text-amber-300 text-xs font-semibold px-2.5 py-1.5 rounded-xl transition flex items-center gap-1">
-                    <i data-lucide="layout-dashboard" class="w-3.5 h-3.5"></i>
-                    <span>Admin</span>
-                </a>
-
-                <!-- User Login -->
+                <!-- Customer Account -->
                 <div id="authContainer" class="flex items-center gap-2">
-                    <button id="btnGoogleLogin" class="bg-white hover:bg-slate-100 text-slate-900 text-xs font-semibold px-3 py-1.5 rounded-xl transition shadow flex items-center gap-1.5">
-                        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
-                        <span>Google Sign In</span>
-                    </button>
+                    <a href="/login" class="bg-white hover:bg-slate-100 text-slate-900 text-xs font-semibold px-3 py-1.5 rounded-xl transition shadow flex items-center gap-1.5">
+                        <i data-lucide="user" class="w-3.5 h-3.5"></i>
+                        <span>Customer Login</span>
+                    </a>
                     <div id="userBadge" class="hidden flex items-center gap-2 bg-slate-900 border border-slate-700 px-2.5 py-1 rounded-xl">
-                        <img id="userAvatar" src="" class="w-5 h-5 rounded-full border border-indigo-400">
                         <span id="userName" class="text-xs text-slate-200 font-medium">User</span>
                     </div>
                 </div>
@@ -62,7 +55,7 @@
         <div class="lg:col-span-5 bg-slate-900/80 border border-slate-800 rounded-2xl p-5 flex flex-col justify-between shadow-xl">
             <div class="space-y-4">
                 <h2 class="text-sm font-semibold text-slate-200 flex items-center gap-2">
-                    <i data-lucide="sparkles" class="w-4 h-4 text-indigo-400"></i> Write Your Song Concept
+                    <i data-lucide="sparkles" class="w-4 h-4 text-indigo-400"></i> গানের ভাবনা লিখুন
                 </h2>
 
                 <div class="flex flex-wrap gap-1.5">
@@ -70,7 +63,7 @@
                     <button class="trend-chip text-[11px] bg-slate-950 border border-slate-800 px-2.5 py-1 rounded-lg text-slate-300" data-text="High-energy EDM drop with futuristic bass">⚡ Cyberpunk Beat</button>
                 </div>
 
-                <textarea id="promptInput" rows="3" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm focus:border-indigo-500 outline-none text-white resize-none" placeholder="e.g. বর্ষার রাতে নদীর পাড়ে স্মৃতির বাঁশির সুর..."></textarea>
+                <textarea id="promptInput" rows="3" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm focus:border-indigo-500 outline-none text-white resize-none" placeholder="যেমন: বর্ষার রাতে নদীর পাড়ে স্মৃতির বাঁশির সুর..."></textarea>
                 
                 <div class="grid grid-cols-2 gap-3">
                     <div>
@@ -102,19 +95,19 @@
             </div>
 
             <button id="submitBtn" class="mt-6 w-full py-3 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white rounded-xl text-sm font-semibold transition flex items-center justify-center gap-2 shadow-lg shadow-indigo-600/30">
-                <i data-lucide="play" class="w-4 h-4 fill-white"></i> <span>Generate Track (-1 Credit)</span>
+                <i data-lucide="play" class="w-4 h-4 fill-white"></i> <span>গান তৈরি করুন (-১ ক্রেডিট)</span>
             </button>
         </div>
 
         <div class="lg:col-span-7 bg-slate-900/80 border border-slate-800 rounded-2xl p-5 flex flex-col justify-between shadow-xl">
             <div>
                 <div class="flex items-center justify-between pb-3 border-b border-slate-800 mb-3">
-                    <h2 class="text-sm font-semibold text-slate-200">Live Studio Output</h2>
+                    <h2 class="text-sm font-semibold text-slate-200">লাইভ স্টুডিও প্লেয়ার</h2>
                     <span id="badgeStatus" class="text-[10px] bg-slate-800 text-slate-400 px-2 py-0.5 rounded font-mono">STANDBY</span>
                 </div>
 
                 <div id="statusBox" class="text-xs font-mono text-slate-400 bg-slate-950 p-4 rounded-xl h-28 overflow-y-auto whitespace-pre-line border border-slate-800 mb-4">
-                    গানের ভাবনা লিখুন এবং Generate Track বাটনে চাপ দিন।
+                    গানের ভাবনা লিখুন এবং গান তৈরি করুন বাটনে চাপ দিন।
                 </div>
 
                 <div id="playerSection" class="bg-slate-950 p-4 rounded-xl border border-indigo-900/40 hidden space-y-3">
@@ -143,20 +136,20 @@
 
             <div class="flex items-center justify-between border-t border-slate-800 pt-3 mt-4 text-[11px]">
                 <span class="text-emerald-400 flex items-center gap-1 font-medium">
-                    <i data-lucide="shield-check" class="w-3.5 h-3.5"></i> 100% Commercial Copyright Free Master
+                    <i data-lucide="shield-check" class="w-3.5 h-3.5"></i> ১০০% কমার্শিয়াল ও কপিরাইট মুক্ত মাস্টার
                 </span>
                 <span id="licenseCode" class="text-slate-500 font-mono">LIC-GLOBAL</span>
             </div>
         </div>
     </main>
 
-    <!-- My Creations Modal (ক্লিক করলেই সরাসরি পপ-আপে সব গান দেখা যাবে) -->
+    <!-- My Creations Modal -->
     <div id="creationsModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md flex items-center justify-center z-50 p-4 hidden">
         <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-3xl w-full p-6 shadow-2xl relative max-h-[85vh] flex flex-col">
             <div class="flex items-center justify-between pb-3 border-b border-slate-800">
                 <div class="flex items-center gap-2">
                     <i data-lucide="folder-music" class="w-5 h-5 text-indigo-400"></i>
-                    <h3 class="text-base font-bold text-white">My Creations Library</h3>
+                    <h3 class="text-base font-bold text-white">আমার তৈরি গানসমূহ (My Creations)</h3>
                 </div>
                 <button id="btnCloseCreations" class="text-slate-400 hover:text-white p-1">
                     <i data-lucide="x" class="w-5 h-5"></i>
@@ -164,7 +157,6 @@
             </div>
             
             <div id="modalCreationsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 overflow-y-auto pr-1">
-                <!-- Dynamically Populated -->
             </div>
         </div>
     </div>
@@ -176,7 +168,7 @@
                 <i data-lucide="x" class="w-5 h-5"></i>
             </button>
             <h3 class="text-xl font-bold text-white">Get Studio Credits</h3>
-            <p class="text-xs text-slate-400 mt-1 mb-6">সীমাহীন গান তৈরি করতে এবং সোশ্যাল মিডিয়ায় ছড়িয়ে দিতে ক্রেডিট রিচার্জ করুন।</p>
+            <p class="text-xs text-slate-400 mt-1 mb-6">গান তৈরি করতে ক্রেডিট রিচার্জ করুন।</p>
             <div class="space-y-3">
                 <button class="buy-plan-btn w-full p-4 bg-slate-950 border border-slate-800 hover:border-indigo-500 rounded-xl flex items-center justify-between transition" data-credits="50">
                     <div class="text-left">
@@ -188,7 +180,7 @@
                 <button class="buy-plan-btn w-full p-4 bg-slate-950 border-2 border-amber-500 rounded-xl flex items-center justify-between transition shadow-lg shadow-amber-500/10" data-credits="250">
                     <div class="text-left">
                         <div class="text-sm font-bold text-white">Creator Unlimited (250 Credits)</div>
-                        <div class="text-xs text-slate-400">২৫০টি ট্র্যাক + কমার্শিয়াল লাইসেন্স</div>
+                        <div class="text-xs text-slate-400">২৫০টি ট্র্যাক + ফুল লাইসেন্স</div>
                     </div>
                     <div class="text-base font-black text-amber-400">₹1199</div>
                 </button>

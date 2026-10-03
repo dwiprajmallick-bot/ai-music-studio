@@ -22,20 +22,22 @@ app.use("/api/payment", paymentRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/auth", secureAuthRoutes);
 
-// সুরক্ষিত আলাদা পেজ রাউটস
+// ১. সাধারণ কাস্টমার লগইন পেজ
 app.get("/login", (req, res) => {
     res.sendFile(path.join(__dirname, "public", "customer-login.html"));
 });
 
-app.get("/admin-portal", (req, res) => {
+// ২. সম্পূর্ণ গোপন এডমিন লগইন গেটওয়ে (সাধারণ কেউ জানবে না)
+app.get("/secret-owner-gateway", (req, res) => {
     res.sendFile(path.join(__dirname, "public", "admin-login.html"));
 });
 
-app.get("/admin", (req, res) => {
+// ৩. মালিকের মূল ড্যাশবোর্ড
+app.get("/owner-dashboard-view", (req, res) => {
     res.sendFile(path.join(__dirname, "public", "admin.html"));
 });
 
-// মূল ফ্রন্টএন্ড
+// কাস্টমার পেজ (হোম)
 app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "public", "index.html"));
 });
