@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Owner Dashboard - MelodyAI Pro</title>
+    <title>Owner Master Console - MelodyAI Pro</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
@@ -15,123 +15,223 @@
     </script>
 
     <header class="border-b border-slate-800 bg-slate-900/80 p-4 sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto flex items-center justify-between">
+        <div class="max-w-7xl mx-auto flex items-center justify-between flex-wrap gap-3">
             <div class="flex items-center gap-2">
                 <div class="bg-red-500 p-2 rounded-xl text-white font-black">
                     <i data-lucide="shield-check" class="w-5 h-5"></i>
                 </div>
                 <div>
-                    <h1 class="text-base font-bold text-white">Owner Master Console</h1>
-                    <p class="text-[11px] text-slate-400">লাইভ আয়, কাস্টমার ও সাইট আপডেট ম্যানেজার</p>
+                    <h1 class="text-base font-bold text-white" id="txtConsoleTitle">Owner Master Console</h1>
+                    <p class="text-[11px] text-slate-400" id="txtConsoleSubtitle">লাইভ আয়, কাস্টমার ও সাইট আপডেট ম্যানেজার</p>
                 </div>
             </div>
-            <button onclick="sessionStorage.clear(); window.location.href=\x27/\x27;" class="text-xs bg-red-950 text-red-300 border border-red-800 px-3 py-1.5 rounded-lg flex items-center gap-1.5 hover:bg-red-900 transition">
-                <i data-lucide="log-out" class="w-3.5 h-3.5"></i> লগ আউট
-            </button>
+
+            <div class="flex items-center gap-3">
+                <!-- ভাষা পরিবর্তনের টগল (বাংলা / English) -->
+                <div class="flex items-center gap-1.5 bg-slate-900 border border-slate-700 px-2.5 py-1.5 rounded-xl">
+                    <i data-lucide="languages" class="w-3.5 h-3.5 text-indigo-400"></i>
+                    <select id="adminLangToggle" class="bg-transparent text-xs text-slate-200 outline-none font-medium cursor-pointer">
+                        <option value="bn" class="bg-slate-900">বাংলা (Bengali)</option>
+                        <option value="en" class="bg-slate-900">English</option>
+                    </select>
+                </div>
+
+                <button onclick="sessionStorage.clear(); window.location.href=\x27/\x27;" class="text-xs bg-red-950 text-red-300 border border-red-800 px-3 py-1.5 rounded-lg flex items-center gap-1.5 hover:bg-red-900 transition" id="btnLogout">
+                    <i data-lucide="log-out" class="w-3.5 h-3.5"></i> <span>লগ আউট</span>
+                </button>
+            </div>
         </div>
     </header>
 
     <main class="max-w-7xl mx-auto p-4 md:p-6 space-y-8">
-        <!-- 3 Key Metric Cards -->
+        <!-- মেট্রিক্স কার্ড -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
             <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5">
                 <div class="flex items-center justify-between">
-                    <span class="text-xs text-slate-400 font-semibold uppercase">মোট আয় (Total Earnings)</span>
+                    <span class="text-xs text-slate-400 font-semibold uppercase" id="lblRev">মোট আয় (Total Earnings)</span>
                     <div class="p-2 bg-emerald-950/60 text-emerald-400 rounded-xl"><i data-lucide="indian-rupee" class="w-4 h-4"></i></div>
                 </div>
                 <div class="text-2xl font-black text-emerald-400 mt-2" id="valRevenue">₹ 0.00</div>
-                <p class="text-[10px] text-slate-500 mt-1">Stripe & UPI সফল পেমেন্ট থেকে</p>
+                <p class="text-[10px] text-slate-500 mt-1" id="lblRevSub">সফল পেমেন্ট থেকে</p>
             </div>
 
             <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5">
                 <div class="flex items-center justify-between">
-                    <span class="text-xs text-slate-400 font-semibold uppercase">মোট কাস্টমার (Registered Users)</span>
+                    <span class="text-xs text-slate-400 font-semibold uppercase" id="lblUsers">মোট কাস্টমার (Registered Users)</span>
                     <div class="p-2 bg-indigo-950/60 text-indigo-400 rounded-xl"><i data-lucide="users" class="w-4 h-4"></i></div>
                 </div>
                 <div class="text-2xl font-black text-white mt-2" id="valUsers">0</div>
-                <p class="text-[10px] text-slate-500 mt-1">নিবন্ধিত কাস্টমার সংখ্যা</p>
+                <p class="text-[10px] text-slate-500 mt-1" id="lblUsersSub">নিবন্ধিত কাস্টমার সংখ্যা</p>
             </div>
 
             <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5">
                 <div class="flex items-center justify-between">
-                    <span class="text-xs text-slate-400 font-semibold uppercase">মোট অর্ডার (Completed Orders)</span>
+                    <span class="text-xs text-slate-400 font-semibold uppercase" id="lblOrders">মোট অর্ডার (Completed Orders)</span>
                     <div class="p-2 bg-amber-950/60 text-amber-400 rounded-xl"><i data-lucide="shopping-cart" class="w-4 h-4"></i></div>
                 </div>
                 <div class="text-2xl font-black text-amber-400 mt-2" id="valOrders">0</div>
-                <p class="text-[10px] text-slate-500 mt-1">সফল ক্রেডিট রিচার্জ সংখ্যা</p>
+                <p class="text-[10px] text-slate-500 mt-1" id="lblOrdersSub">সফল ক্রেডিট রিচার্জ সংখ্যা</p>
             </div>
         </div>
 
-        <!-- NEW: LIVE SITE CONTENT UPDATER -->
+        <!-- এডমিন নিজস্ব সিকিউরিটি ক্রেডেনশিয়াল পরিবর্তন (Security Settings) -->
+        <section class="bg-slate-900 border border-red-900/40 rounded-2xl p-6 shadow-xl">
+            <div class="flex items-center gap-2 pb-4 border-b border-slate-800 mb-5">
+                <div class="p-2 bg-red-950/60 text-red-400 rounded-xl">
+                    <i data-lucide="key-round" class="w-5 h-5"></i>
+                </div>
+                <div>
+                    <h3 class="text-base font-bold text-white" id="txtSecTitle">এডমিন সিকিউরিটি সেটিংস (আইডি, পাসওয়ার্ড ও পিন পরিবর্তন)</h3>
+                    <p class="text-xs text-slate-400" id="txtSecSub">আপনার নিজস্ব এডমিন আইডি, নতুন পাসওয়ার্ড ও ৬-সংখ্যার 2FA পিন সেট করুন</p>
+                </div>
+            </div>
+
+            <form id="credUpdateForm" class="space-y-4 max-w-2xl">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1" id="lblNewEmail">নতুন এডমিন ইমেইল / আইডি</label>
+                    <input type="email" id="newAdminEmail" required class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-white outline-none focus:border-red-500 font-mono">
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 mb-1" id="lblNewPass">নতুন পাসওয়ার্ড</label>
+                        <input type="password" id="newAdminPassword" required class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-white outline-none focus:border-red-500 font-mono" placeholder="••••••••">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 mb-1" id="lblNewPin">নতুন 2FA পিন (PIN)</label>
+                        <input type="text" id="newAdminPin" required class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-white outline-none focus:border-red-500 font-mono" placeholder="যেমন: 112233">
+                    </div>
+                </div>
+                <button type="submit" class="py-2.5 px-5 bg-red-600 hover:bg-red-500 text-white rounded-xl text-xs font-bold transition flex items-center gap-2">
+                    <i data-lucide="shield-check" class="w-4 h-4"></i> <span id="btnSaveCred">নতুন সিকিউরিটি তথ্য সংরক্ষণ করুন</span>
+                </button>
+            </form>
+        </section>
+
+        <!-- লাইভ সাইট কন্টেন্ট ও প্রাইসিং কন্ট্রোল -->
         <section class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl">
             <div class="flex items-center gap-2 pb-4 border-b border-slate-800 mb-5">
                 <div class="p-2 bg-indigo-950/60 text-indigo-400 rounded-xl">
                     <i data-lucide="sliders" class="w-5 h-5"></i>
                 </div>
                 <div>
-                    <h3 class="text-base font-bold text-white">লাইভ সাইট কন্ট্রোল ও কন্টেন্ট আপডেট সেন্টার</h3>
-                    <p class="text-xs text-slate-400">এখান থেকে যেকোনো লেখা বা মূল্য পরিবর্তন করলে কাস্টমারদের পেজে সাথে সাথে বদলে যাবে</p>
+                    <h3 class="text-base font-bold text-white" id="txtCmsTitle">লাইভ সাইট কন্ট্রোল ও কন্টেন্ট আপডেট সেন্টার</h3>
+                    <p class="text-xs text-slate-400" id="txtCmsSub">এখান থেকে লেখা বা মূল্য পরিবর্তন করলে কাস্টমার পেজে সরাসরি আপডেট হয়ে যাবে</p>
                 </div>
             </div>
 
             <form id="siteUpdateForm" class="space-y-4">
                 <div>
-                    <label class="block text-xs font-semibold text-slate-300 mb-1">📢 হোমপেজের নোটিশ / অফার ব্যানার টেক্সট</label>
-                    <input type="text" id="inpBanner" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-white outline-none focus:border-indigo-500" placeholder="যেমন: আজকের স্পেশাল অফার...">
+                    <label class="block text-xs font-semibold text-slate-300 mb-1" id="lblBanner">📢 ব্যানার নোটিশ টেক্সট</label>
+                    <input type="text" id="inpBanner" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-white outline-none focus:border-indigo-500">
                 </div>
-
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-xs font-semibold text-slate-300 mb-1">💳 Starter Plan মূল্য (₹)</label>
-                        <input type="number" id="inpStarter" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-white outline-none focus:border-indigo-500 font-mono" placeholder="399">
+                        <label class="block text-xs font-semibold text-slate-300 mb-1" id="lblStarter">💳 Starter Plan মূল্য (₹)</label>
+                        <input type="number" id="inpStarter" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-white outline-none focus:border-indigo-500 font-mono">
                     </div>
                     <div>
-                        <label class="block text-xs font-semibold text-slate-300 mb-1">👑 Creator Unlimited Plan মূল্য (₹)</label>
-                        <input type="number" id="inpCreator" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-white outline-none focus:border-indigo-500 font-mono" placeholder="1199">
+                        <label class="block text-xs font-semibold text-slate-300 mb-1" id="lblCreator">👑 Creator Unlimited Plan মূল্য (₹)</label>
+                        <input type="number" id="inpCreator" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-white outline-none focus:border-indigo-500 font-mono">
                     </div>
                 </div>
-
-                <div>
-                    <label class="block text-xs font-semibold text-slate-300 mb-1">🔥 ট্রেন্ডিং প্রম্পট আইডিয়া (কমা দিয়ে আলাদা করুন)</label>
-                    <textarea id="inpTrending" rows="2" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-white outline-none focus:border-indigo-500 resize-none" placeholder="Rainy Love Ballad, Cyberpunk Beat, Romantic Lo-Fi"></textarea>
-                </div>
-
-                <button type="submit" class="py-3 px-6 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold transition flex items-center gap-2 shadow-lg shadow-indigo-600/20">
-                    <i data-lucide="save" class="w-4 h-4"></i> লাইভ সাইটে আপডেট প্রকাশ করুন
+                <button type="submit" class="py-2.5 px-5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold transition flex items-center gap-2">
+                    <i data-lucide="save" class="w-4 h-4"></i> <span id="btnSaveCms">লাইভ সাইটে প্রকাশ করুন</span>
                 </button>
             </form>
         </section>
-
-        <!-- Orders Table -->
-        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5">
-            <h3 class="text-sm font-bold text-white mb-4 flex items-center gap-2">
-                <i data-lucide="receipt" class="w-4 h-4 text-indigo-400"></i> সাম্প্রতিক পেমেন্ট ও ইনকাম তালিকা
-            </h3>
-            <div class="overflow-x-auto">
-                <table class="w-full text-left text-xs">
-                    <thead>
-                        <tr class="border-b border-slate-800 text-slate-400">
-                            <th class="pb-3 font-semibold">অর্ডার আইডি</th>
-                            <th class="pb-3 font-semibold">কাস্টমার ইমেইল</th>
-                            <th class="pb-3 font-semibold">প্ল্যান</th>
-                            <th class="pb-3 font-semibold">টাকার পরিমাণ</th>
-                            <th class="pb-3 font-semibold">স্ট্যাটাস</th>
-                            <th class="pb-3 font-semibold">তারিখ</th>
-                        </tr>
-                    </thead>
-                    <tbody id="ordersTbody" class="divide-y divide-slate-800/60">
-                        <tr><td colspan="6" class="py-4 text-center text-slate-500">ডাটা লোড হচ্ছে...</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
     </main>
 
     <script>
         document.addEventListener("DOMContentLoaded", async () => {
             if (window.lucide) { lucide.createIcons(); }
 
-            // মেট্রিক্স ও অর্ডার লোড
+            const loggedEmail = sessionStorage.getItem("admin_logged_email") || "admin@melodyai.pro";
+            document.getElementById("newAdminEmail").value = loggedEmail;
+
+            const adminDict = {
+                bn: {
+                    title: "Owner Master Console",
+                    subtitle: "লাইভ আয়, কাস্টমার ও সাইট আপডেট ম্যানেজার",
+                    logout: "লগ আউট",
+                    rev: "মোট আয় (Total Earnings)",
+                    revSub: "সফল পেমেন্ট থেকে",
+                    users: "মোট কাস্টমার (Registered Users)",
+                    usersSub: "নিবন্ধিত কাস্টমার সংখ্যা",
+                    orders: "মোট অর্ডার (Completed Orders)",
+                    ordersSub: "সফল ক্রেডিট রিচার্জ সংখ্যা",
+                    secTitle: "এডমিন সিকিউরিটি সেটিংস (আইডি, পাসওয়ার্ড ও পিন পরিবর্তন)",
+                    secSub: "আপনার নিজস্ব এডমিন আইডি, নতুন পাসওয়ার্ড ও ৬-সংখ্যার 2FA পিন সেট করুন",
+                    newEmail: "নতুন এডমিন ইমেইল / আইডি",
+                    newPass: "নতুন পাসওয়ার্ড",
+                    newPin: "নতুন 2FA পিন (PIN)",
+                    btnSaveCred: "নতুন সিকিউরিটি তথ্য সংরক্ষণ করুন",
+                    cmsTitle: "লাইভ সাইট কন্ট্রোল ও কন্টেন্ট আপডেট সেন্টার",
+                    cmsSub: "এখান থেকে লেখা বা মূল্য পরিবর্তন করলে কাস্টমার পেজে সরাসরি আপডেট হয়ে যাবে",
+                    banner: "📢 ব্যানার নোটিশ টেক্সট",
+                    starter: "💳 Starter Plan মূল্য (₹)",
+                    creator: "👑 Creator Unlimited Plan মূল্য (₹)",
+                    btnSaveCms: "লাইভ সাইটে প্রকাশ করুন"
+                },
+                en: {
+                    title: "Owner Master Console",
+                    subtitle: "Live Revenue, User & CMS Management System",
+                    logout: "Log Out",
+                    rev: "Total Earnings",
+                    revSub: "From verified payments",
+                    users: "Total Registered Users",
+                    usersSub: "Active client base",
+                    orders: "Completed Orders",
+                    ordersSub: "Successful credit recharge count",
+                    secTitle: "Admin Security Settings (ID, Password & PIN)",
+                    secSub: "Configure your custom admin credentials and 6-digit 2FA PIN",
+                    newEmail: "New Admin Email / ID",
+                    newPass: "New Password",
+                    newPin: "New 2FA PIN",
+                    btnSaveCred: "Save Security Credentials",
+                    cmsTitle: "Live Site CMS & Content Control Center",
+                    cmsSub: "Modifications made here reflect instantly on the public website",
+                    banner: "📢 Banner Announcement Text",
+                    starter: "💳 Starter Plan Price (₹)",
+                    creator: "👑 Creator Unlimited Plan Price (₹)",
+                    btnSaveCms: "Publish Updates Live"
+                }
+            };
+
+            function applyAdminLang(lang) {
+                const d = adminDict[lang];
+                document.getElementById("txtConsoleTitle").innerText = d.title;
+                document.getElementById("txtConsoleSubtitle").innerText = d.subtitle;
+                document.querySelector("#btnLogout span").innerText = d.logout;
+                document.getElementById("lblRev").innerText = d.rev;
+                document.getElementById("lblRevSub").innerText = d.revSub;
+                document.getElementById("lblUsers").innerText = d.users;
+                document.getElementById("lblUsersSub").innerText = d.usersSub;
+                document.getElementById("lblOrders").innerText = d.orders;
+                document.getElementById("lblOrdersSub").innerText = d.ordersSub;
+                document.getElementById("txtSecTitle").innerText = d.secTitle;
+                document.getElementById("txtSecSub").innerText = d.secSub;
+                document.getElementById("lblNewEmail").innerText = d.newEmail;
+                document.getElementById("lblNewPass").innerText = d.newPass;
+                document.getElementById("lblNewPin").innerText = d.newPin;
+                document.getElementById("btnSaveCred").innerText = d.btnSaveCred;
+                document.getElementById("txtCmsTitle").innerText = d.cmsTitle;
+                document.getElementById("txtCmsSub").innerText = d.cmsSub;
+                document.getElementById("lblBanner").innerText = d.banner;
+                document.getElementById("lblStarter").innerText = d.starter;
+                document.getElementById("lblCreator").innerText = d.creator;
+                document.getElementById("btnSaveCms").innerText = d.btnSaveCms;
+                localStorage.setItem("admin_panel_lang", lang);
+            }
+
+            const currentAdminLang = localStorage.getItem("admin_panel_lang") || "bn";
+            document.getElementById("adminLangToggle").value = currentAdminLang;
+            applyAdminLang(currentAdminLang);
+
+            document.getElementById("adminLangToggle").addEventListener("change", (e) => {
+                applyAdminLang(e.target.value);
+            });
+
+            // মেট্রিক্স ও সাইট সেটিংস ফেচ
             try {
                 const res = await fetch("/api/admin/metrics");
                 const data = await res.json();
@@ -139,22 +239,9 @@
                     document.getElementById("valRevenue").innerText = `${data.currency} ${data.totalRevenue.toLocaleString()}`;
                     document.getElementById("valUsers").innerText = data.totalUsers;
                     document.getElementById("valOrders").innerText = data.totalOrders;
-
-                    const tbody = document.getElementById("ordersTbody");
-                    tbody.innerHTML = data.recentOrders.map(o => `
-                        <tr class="hover:bg-slate-950/40">
-                            <td class="py-3 font-mono text-indigo-400">${o.id}</td>
-                            <td class="py-3 text-slate-200">${o.email}</td>
-                            <td class="py-3 text-slate-300 font-medium">${o.plan}</td>
-                            <td class="py-3 font-bold text-emerald-400">${data.currency} ${o.amount}</td>
-                            <td class="py-3"><span class="bg-emerald-950 text-emerald-400 border border-emerald-800 text-[10px] px-2 py-0.5 rounded-full font-bold">PAID</span></td>
-                            <td class="py-3 text-slate-500 font-mono">${o.date}</td>
-                        </tr>
-                    `).join("");
                 }
-            } catch (e) { console.error(e); }
+            } catch (e) {}
 
-            // বর্তমান সাইট সেটিংস লোড করে ফর্মে বসানো
             try {
                 const setRes = await fetch("/api/admin/site-settings");
                 const setData = await setRes.json();
@@ -162,28 +249,45 @@
                     document.getElementById("inpBanner").value = setData.settings.bannerNotice || "";
                     document.getElementById("inpStarter").value = setData.settings.starterPrice || "399";
                     document.getElementById("inpCreator").value = setData.settings.creatorPrice || "1199";
-                    document.getElementById("inpTrending").value = (setData.settings.trendingChips || []).join(", ");
                 }
-            } catch (e) { console.error(e); }
+            } catch (e) {}
 
-            // আপডেট ফর্ম সাবমিট
+            // ক্রেডেনশিয়াল আপডেট ফর্ম সাবমিশন
+            document.getElementById("credUpdateForm").addEventListener("submit", async (e) => {
+                e.preventDefault();
+                const newEmail = document.getElementById("newAdminEmail").value.trim();
+                const newPassword = document.getElementById("newAdminPassword").value.trim();
+                const newPin = document.getElementById("newAdminPin").value.trim();
+
+                const res = await fetch("/api/auth/admin/update-credentials", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ currentEmail: loggedEmail, newEmail, newPassword, newPin })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    sessionStorage.setItem("admin_logged_email", newEmail);
+                    alert("✅ এডমিন আইডি, পাসওয়ার্ড ও পিন সফলভাবে পরিবর্তন করা হয়েছে!");
+                } else {
+                    alert("ত্রুটি: " + data.message);
+                }
+            });
+
+            // লাইভ সাইট কনটেন্ট আপডেট
             document.getElementById("siteUpdateForm").addEventListener("submit", async (e) => {
                 e.preventDefault();
                 const bannerNotice = document.getElementById("inpBanner").value.trim();
                 const starterPrice = document.getElementById("inpStarter").value.trim();
                 const creatorPrice = document.getElementById("inpCreator").value.trim();
-                const trendingChips = document.getElementById("inpTrending").value.split(",").map(s => s.trim()).filter(Boolean);
 
                 const upRes = await fetch("/api/admin/update-site-settings", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ bannerNotice, starterPrice, creatorPrice, trendingChips })
+                    body: JSON.stringify({ bannerNotice, starterPrice, creatorPrice })
                 });
                 const upData = await upRes.json();
                 if (upData.success) {
-                    alert("🎉 সাইট সফলভাবে আপডেট হয়েছে! কাস্টমারদের পেজে পরিবর্তনটি লাইভ কার্যকর হয়ে গেছে।");
-                } else {
-                    alert("আপডেট ব্যর্থ হয়েছে: " + upData.message);
+                    alert("🎉 সাইট সফলভাবে আপডেট হয়েছে!");
                 }
             });
         });
