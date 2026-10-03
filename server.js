@@ -6,6 +6,7 @@ require("dotenv").config();
 const apiRoutes = require("./src/routes/api");
 const paymentRoutes = require("./src/routes/payment");
 const authRoutes = require("./src/routes/auth");
+const adminRoutes = require("./src/routes/admin");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -19,8 +20,14 @@ app.use("/storage", express.static(path.join(__dirname, "storage")));
 app.use("/api", apiRoutes);
 app.use("/api/payment", paymentRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api/admin", adminRoutes);
 
-// ফ্রন্টএন্ড রুট
+// এডমিন ড্যাশবোর্ড পেজ রাউট
+app.get("/admin", (req, res) => {
+    res.sendFile(path.join(__dirname, "public", "admin.html"));
+});
+
+// মূল ফ্রন্টএন্ড রুট
 app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "public", "index.html"));
 });

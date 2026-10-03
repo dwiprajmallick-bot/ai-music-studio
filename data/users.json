@@ -1,0 +1,10 @@
+{
+  "creator_gmail_com": {
+    "id": "creator_gmail_com",
+    "email": "creator@gmail.com",
+    "name": "creator",
+    "picture": "https://api.dicebear.com/7.x/bottts/svg?seed=creator@gmail.com",
+    "credits": 10,
+    "createdAt": "2026-10-03T11:48:35.562Z"
+  }
+}
