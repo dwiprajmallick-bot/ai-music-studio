@@ -3,6 +3,17 @@ const crypto = require("crypto");
 const fs = require("fs");
 const path = require("path");
 const router = express.Router();
+require("dotenv").config();
+
+let twilioClient = null;
+if (process.env.TWILIO_ACCOUNT_SID && process.env.TWILIO_AUTH_TOKEN) {
+    try {
+        const twilio = require("twilio");
+        twilioClient = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
+    } catch(e) {
+        console.error("Twilio initialization error:", e);
+    }
+}
 
 const DATA_DIR = path.join(__dirname, "../../data");
 const CUSTOMERS_PATH = path.join(DATA_DIR, "customers.json");
@@ -35,7 +46,7 @@ if (!fs.existsSync(ADMINS_PATH)) {
 }
 
 const loginAttempts = {};
-const phoneOtpStore = {}; // মেমোরি ওটিপি ক্যাশ: { fullPhone: { otp, expires } }
+const phoneOtpStore = {};
 
 function checkRateLimit(req, res, next) {
     const ip = req.ip || req.connection.remoteAddress;
@@ -53,7 +64,7 @@ function recordFailedAttempt(ip) {
     loginAttempts[ip].lastAttempt = now;
 }
 
-// কাস্টমার রেজিস্ট্রেশন (ইমেইল ও পাসওয়ার্ড)
+// কাস্টমার রেজিস্ট্রেশন (ইমেইল)
 router.post("/customer/register", (req, res) => {
     try {
         const { email, password, name } = req.body;
@@ -81,7 +92,7 @@ router.post("/customer/register", (req, res) => {
     }
 });
 
-// কাস্টমার লগইন (ইমেইল ও পাসওয়ার্ড)
+// কাস্টমার লগইন (ইমেইল)
 router.post("/customer/login", checkRateLimit, (req, res) => {
     const { email, password } = req.body;
     const ip = req.ip || req.connection.remoteAddress;
@@ -103,32 +114,52 @@ router.post("/customer/login", checkRateLimit, (req, res) => {
     });
 });
 
-// আন্তর্জাতিক মোবাইল ওটিপি জেনারেশন
-router.post("/customer/phone/send-otp", (req, res) => {
-    const { countryCode, phoneNumber } = req.body;
-    if (!countryCode || !phoneNumber || phoneNumber.length < 6) {
-        return res.status(400).json({ success: false, message: "সঠিক দেশের কোড ও মোবাইল নম্বর দিন।" });
+// সরাসরি মোবাইলে বাস্তব SMS OTP পাঠানো
+router.post("/customer/phone/send-otp", async (req, res) => {
+    try {
+        const { countryCode, phoneNumber } = req.body;
+        if (!countryCode || !phoneNumber || phoneNumber.length < 6) {
+            return res.status(400).json({ success: false, message: "সঠিক দেশের কোড ও মোবাইল নম্বর দিন।" });
+        }
+
+        const fullPhone = `${countryCode}${phoneNumber}`.replace(/\s+/g, "");
+        const generatedOtp = Math.floor(100000 + Math.random() * 900000).toString();
+
+        phoneOtpStore[fullPhone] = {
+            otp: generatedOtp,
+            expires: Date.now() + 5 * 60 * 1000
+        };
+
+        console.log(`[SMS Engine] Dispatching OTP ${generatedOtp} to real mobile:${fullPhone}`);
+
+        // Twilio SMS পাঠানো
+        if (twilioClient && process.env.TWILIO_PHONE_NUMBER) {
+            await twilioClient.messages.create({
+                body: `Your MelodyAI verification code is: ${generatedOtp}. Valid for 5 minutes. Do not share this OTP with anyone.`,
+                from: process.env.TWILIO_PHONE_NUMBER,
+                to: fullPhone
+            });
+            return res.json({
+                success: true,
+                message: `${fullPhone} নম্বরে SMS-এর মাধ্যমে ওটিপি পাঠিয়ে দেওয়া হয়েছে।`,
+                fullPhone
+            });
+        } else {
+            // লাইভ Twilio ক্রেডেনশিয়াল না থাকলে কনসোলে প্রিন্ট হবে এবং টেস্ট ওটিপি দেবে
+            return res.json({
+                success: true,
+                message: `${fullPhone} নম্বরে SMS রিকোয়েস্ট তৈরি হয়েছে।`,
+                fullPhone,
+                demoOtp: generatedOtp
+            });
+        }
+    } catch(err) {
+        console.error("SMS Dispatch Error:", err);
+        return res.status(500).json({ success: false, message: "SMS পাঠাতে সমস্যা হয়েছে: " + (err.message || "Gateway timeout") });
     }
-
-    const fullPhone = `${countryCode}${phoneNumber}`.replace(/\s+/g, "");
-    const generatedOtp = Math.floor(100000 + Math.random() * 900000).toString();
-
-    phoneOtpStore[fullPhone] = {
-        otp: generatedOtp,
-        expires: Date.now() + 5 * 60 * 1000
-    };
-
-    console.log(`[Global SMS Gateway] OTP for ${fullPhone}: ${generatedOtp}`);
-
-    res.json({
-        success: true,
-        message: "আপনার মোবাইল নম্বরে ৬ সংখ্যার ওটিপি পাঠানো হয়েছে।",
-        fullPhone,
-        demoOtp: generatedOtp // টেস্ট করার সুবিধার্থে সরাসরি পাঠানো হলো
-    });
 });
 
-// আন্তর্জাতিক মোবাইল ওটিপি ভেরিফিকেশন ও অটো-রেজিস্ট্রেশন
+// ওটিপি যাচাই ও লগইন
 router.post("/customer/phone/verify-otp", (req, res) => {
     const { fullPhone, otp } = req.body;
     const record = phoneOtpStore[fullPhone];
