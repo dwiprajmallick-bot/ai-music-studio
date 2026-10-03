@@ -5,8 +5,8 @@ require("dotenv").config();
 
 const apiRoutes = require("./src/routes/api");
 const paymentRoutes = require("./src/routes/payment");
-const authRoutes = require("./src/routes/auth");
 const adminRoutes = require("./src/routes/admin");
+const secureAuthRoutes = require("./src/routes/secureAuth");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -19,15 +19,23 @@ app.use("/storage", express.static(path.join(__dirname, "storage")));
 // API রাউটস
 app.use("/api", apiRoutes);
 app.use("/api/payment", paymentRoutes);
-app.use("/api/auth", authRoutes);
 app.use("/api/admin", adminRoutes);
+app.use("/api/auth", secureAuthRoutes);
 
-// এডমিন ড্যাশবোর্ড পেজ রাউট
+// সুরক্ষিত আলাদা পেজ রাউটস
+app.get("/login", (req, res) => {
+    res.sendFile(path.join(__dirname, "public", "customer-login.html"));
+});
+
+app.get("/admin-portal", (req, res) => {
+    res.sendFile(path.join(__dirname, "public", "admin-login.html"));
+});
+
 app.get("/admin", (req, res) => {
     res.sendFile(path.join(__dirname, "public", "admin.html"));
 });
 
-// মূল ফ্রন্টএন্ড রুট
+// মূল ফ্রন্টএন্ড
 app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "public", "index.html"));
 });

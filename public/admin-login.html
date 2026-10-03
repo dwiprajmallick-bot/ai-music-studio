@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Owner Security Gateway - MelodyAI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-black text-slate-100 min-h-screen flex items-center justify-center p-4">
+    <div class="bg-slate-950 border border-red-900/40 p-8 rounded-2xl max-w-md w-full shadow-2xl relative">
+        <div class="text-center mb-6">
+            <div class="w-12 h-12 bg-red-950/40 border border-red-800/60 text-red-400 rounded-xl flex items-center justify-center mx-auto mb-2">
+                <i data-lucide="lock" class="w-6 h-6"></i>
+            </div>
+            <h2 class="text-xl font-bold text-white tracking-wide">মালিকানা এডমিন গেটওয়ে</h2>
+            <p class="text-[11px] text-red-400 font-mono mt-1">RESTRICTED ACCESS • 2FA REQUIRED</p>
+        </div>
+
+        <form id="adminLoginForm" class="space-y-4">
+            <div>
+                <label class="block text-xs font-mono text-slate-400 mb-1">এডমিন আইডি / ইমেইল</label>
+                <input type="email" id="aEmail" value="admin@melodyai.pro" required class="w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-xs text-white outline-none focus:border-red-500 font-mono">
+            </div>
+            <div>
+                <label class="block text-xs font-mono text-slate-400 mb-1">সিকিউরিটি পাসওয়ার্ড</label>
+                <input type="password" id="aPassword" required class="w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-xs text-white outline-none focus:border-red-500 font-mono" placeholder="••••••••">
+            </div>
+            <div>
+                <label class="block text-xs font-mono text-slate-400 mb-1">2FA সিকিউরিটি পিন (পাসকোড)</label>
+                <input type="password" id="a2FA" required class="w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-xs text-white outline-none focus:border-red-500 font-mono tracking-widest" placeholder="998877">
+            </div>
+            <button type="submit" class="w-full py-3 bg-red-600 hover:bg-red-500 text-white rounded-xl text-xs font-bold transition flex items-center justify-center gap-2">
+                <i data-lucide="shield-alert" class="w-4 h-4"></i> যাচাই ও প্রবেশ করুন
+            </button>
+        </form>
+    </div>
+
+    <script>
+        lucide.createIcons();
+        document.getElementById("adminLoginForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const res = await fetch("/api/auth/admin/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    email: document.getElementById("aEmail").value,
+                    password: document.getElementById("aPassword").value,
+                    twoFactorCode: document.getElementById("a2FA").value
+                })
+            });
+            const data = await res.json();
+            if (data.success) {
+                sessionStorage.setItem("admin_auth_token", data.adminToken);
+                alert("এডমিন ভেরিফিকেশন সফল!");
+                window.location.href = "/admin";
+            } else {
+                alert(data.message);
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+[
+  {
+    "id": "ORD_781",
+    "email": "user1@demo.com",
+    "plan": "Starter (50 Credits)",
+    "amount": 399,
+    "currency": "INR",
+    "status": "SUCCESS",
+    "date": "2026-10-02"
+  },
+  {
+    "id": "ORD_782",
+    "email": "creator99@gmail.com",
+    "plan": "Creator Unlimited",
+    "amount": 1199,
+    "currency": "INR",
+    "status": "SUCCESS",
+    "date": "2026-10-03"
+  }
+]
