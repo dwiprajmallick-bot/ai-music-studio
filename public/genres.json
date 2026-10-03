@@ -1,0 +1,153 @@
+﻿[
+  {
+    "category": "ভারতীয় ও দক্ষিণ এশীয় সংগীত (Indian & South Asian)",
+    "genres": [
+      "হিন্দুস্তানি শাস্ত্রীয় (খেয়াল / ধ্রুপদ)",
+      "কর্ণাটক শাস্ত্রীয়",
+      "রাগাশ্রয়ী মেলোডি",
+      "ঠুংরি ও দাদরা",
+      "কাওয়ালি (Sufi Qawwali)",
+      "গজল (Ghazal)",
+      "বাউল / ফোক (Baul Folk)",
+      "ভাটিয়ালি ও ভাওয়াইয়া",
+      "রবীন্দ্রসংগীত ফিউশন",
+      "নজরুলগীতি",
+      "কীর্তন ও ভক্তিগীতি",
+      "ঝুমুর ও লোকগান",
+      "বাংলা আধুনিক পপ",
+      "বলিউড রোমান্টিক মেলোডি",
+      "ভাংড়া ও গিদ্ধা (Punjabi Bhangra)",
+      "দেশি হিপ-হপ (Desi Hip-Hop / DHH)"
+    ]
+  },
+  {
+    "category": "পপ মিউজিক (Pop)",
+    "genres": [
+      "ড্যান্স পপ (Dance Pop)",
+      "সিন্থপপ (Synthpop)",
+      "ইলেকট্রো পপ (Electropop)",
+      "কে-পপ (K-Pop)",
+      "জে-পপ (J-Pop)",
+      "ইন্ডি পপ (Indie Pop)",
+      "টিন পপ ও অ্যাকোস্টিক পপ",
+      "ডিস্কো পপ (Disco Pop)"
+    ]
+  },
+  {
+    "category": "রক ও মেটাল (Rock & Metal)",
+    "genres": [
+      "ক্লাসিক রক (Classic Rock)",
+      "হার্ড রক (Hard Rock)",
+      "অল্টারনেটিভ রক (Alternative Rock)",
+      "ইন্ডি রক (Indie Rock)",
+      "গ্রাঞ্জ (Grunge)",
+      "পাঙ্ক রক (Punk Rock)",
+      "প্রগ্রেসিভ রক (Prog Rock)",
+      "সাইকেডেলিক রক (Psychedelic Rock)",
+      "হেভি মেটাল (Heavy Metal)",
+      "থ্র্যাশ মেটাল (Thrash Metal)",
+      "মেটালকোর ও নু-মেটাল (Nu-Metal)"
+    ]
+  },
+  {
+    "category": "হিপ-হপ ও র‍্যাপ (Hip-Hop & Rap)",
+    "genres": [
+      "বুম-বাপ (Boom Bap)",
+      "ট্র্যাপ (Trap Beat)",
+      "ইউকে / ইউএস ড্রিল (Drill)",
+      "ওল্ড স্কুল হিপ-হপ (Old School)",
+      "গ্যাংস্টা র‍্যাপ (Gangsta Rap)",
+      "ক্লাউড র‍্যাপ (Cloud Rap)",
+      "কনশাস হিপ-হপ (Conscious Hip-Hop)"
+    ]
+  },
+  {
+    "category": "ইলেকট্রনিক ও ড্যান্স (Electronic / EDM)",
+    "genres": [
+      "হাউস মিউজিক (Deep / Tech House)",
+      "প্রগ্রেসিভ হাউস (Progressive House)",
+      "টেকনো (Techno)",
+      "সাই-ট্রান্স (Psytrance / Goa Trance)",
+      "ডাবস্টেপ (Dubstep)",
+      "ড্রাম অ্যান্ড বেস (Drum & Bass / DnB)",
+      "সিন্থওয়েভ ও রেট্রোওয়েভ (Synthwave)",
+      "ফিউচার বেস (Future Bass)",
+      "হার্ডস্টাইল (Hardstyle)"
+    ]
+  },
+  {
+    "category": "আর অ্যান্ড বি এবং সোল (R&B & Soul)",
+    "genres": [
+      "কনটেম্পোরারি R&B",
+      "নিও-সোল (Neo-Soul)",
+      "ক্লাসিক সোল ও মউটাউন (Motown)",
+      "ফাঙ্ক (Funk)",
+      "ডিস্কো ও গ্রুভ (70s/80s Disco)",
+      "আরবান আর অ্যান্ড বি"
+    ]
+  },
+  {
+    "category": "জ্যাজ ও ব্লুজ (Jazz & Blues)",
+    "genres": [
+      "স্মুথ জ্যাজ (Smooth Jazz)",
+      "বেবপ ও সুইং (Bebop / Swing)",
+      "বোসা নোভা (Bossa Nova)",
+      "জ্যাজ ফিউশন (Jazz Fusion)",
+      "ডেল্টা ও শিকাগো ব্লুজ",
+      "অ্যাকোস্টিক ব্লুজ"
+    ]
+  },
+  {
+    "category": "ল্যাটিন ও ক্যারিবিয়ান (Latin & Caribbean)",
+    "genres": [
+      "রেগে (Reggae)",
+      "ড্যান্সহল (Dancehall)",
+      "রেগেটন (Reggaeton)",
+      "সালসা (Salsa)",
+      "বাচাতা (Bachata)",
+      "সাম্বা ও বসানোভা (Brazilian Samba)",
+      "কুম্বিয়া (Cumbia)",
+      "ট্যাঙ্গো (Tango)"
+    ]
+  },
+  {
+    "category": "পশ্চিমা শাস্ত্রীয় (Western Classical)",
+    "genres": [
+      "বারোক পিরিয়ড (Baroque Classical)",
+      "রোমান্টিক পিরিয়ড (Romantic Symphony)",
+      "অপেরা (Opera)",
+      "চেম্বার মিউজিক ও স্ট্রিং কোয়ার্টেট",
+      "মিনিমালিস্ট ও পিয়ানো ক্লাসিক্যাল"
+    ]
+  },
+  {
+    "category": "কান্ট্রি ও ট্র্যাডিশনাল লোকসংগীত (Country & Folk)",
+    "genres": [
+      "ঐতিহ্যবাহী কান্ট্রি (Traditional Country)",
+      "ব্লুগ্রাস (Bluegrass)",
+      "আমেরিকানা (Americana)",
+      "সেল্টিক ফোক (Celtic / Irish Folk)",
+      "ফ্লামেনকো (Spanish Flamenco)"
+    ]
+  },
+  {
+    "category": "আফ্রিকান ও গ্লোবাল বিটস (African & World)",
+    "genres": [
+      "এফ্রোবিটস (Afrobeats)",
+      "আমাপিয়ানো (Amapiano)",
+      "হাইলাইফ ও সৌকুস (Highlife / Soukous)",
+      "কুয়াইতো (Kwaito)",
+      "মিডল ইস্টার্ন মেলোডি ও মাকাম"
+    ]
+  },
+  {
+    "category": "অ্যাম্বিয়েন্ট, চিল ও সিনেমাটিক (Ambient & Cinematic)",
+    "genres": [
+      "Lo-Fi হিপ-হপ ও চিল বিট",
+      "অ্যাম্বিয়েন্ট মেডিটেশন ও হিলিং মিউজিক",
+      "সিনেমেটিক ফিল্ম স্কোর (Epic Orchestra)",
+      "ডাউনটেম্পো ও ট্রিপ-হপ",
+      "গসপেল ও স্পিরিচুয়াল"
+    ]
+  }
+]

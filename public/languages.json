@@ -1,0 +1,19 @@
+﻿[
+  { "code": "bn", "name": "বাংলা (Bengali)", "flag": "🇧🇩/🇮🇳" },
+  { "code": "en", "name": "English", "flag": "🇺🇸/🇬🇧" },
+  { "code": "hi", "name": "हिन्दी (Hindi)", "flag": "🇮🇳" },
+  { "code": "es", "name": "Español (Spanish)", "flag": "🇪🇸" },
+  { "code": "ar", "name": "العربية (Arabic)", "flag": "🇸🇦" },
+  { "code": "fr", "name": "Français (French)", "flag": "🇫🇷" },
+  { "code": "de", "name": "Deutsch (German)", "flag": "🇩🇪" },
+  { "code": "ru", "name": "Русский (Russian)", "flag": "🇷🇺" },
+  { "code": "ja", "name": "日本語 (Japanese)", "flag": "🇯🇵" },
+  { "code": "zh", "name": "中文 (Mandarin Chinese)", "flag": "🇨🇳" },
+  { "code": "pt", "name": "Português (Portuguese)", "flag": "🇧🇷/🇵🇹" },
+  { "code": "ur", "name": "اردو (Urdu)", "flag": "🇵🇰" },
+  { "code": "ta", "name": "தமிழ் (Tamil)", "flag": "🇮🇳/🇱🇰" },
+  { "code": "te", "name": "తెలుగు (Telugu)", "flag": "🇮🇳" },
+  { "code": "ko", "name": "한국어 (Korean)", "flag": "🇰🇷" },
+  { "code": "tr", "name": "Türkçe (Turkish)", "flag": "🇹🇷" },
+  { "code": "it", "name": "Italiano (Italian)", "flag": "🇮🇹" }
+]
